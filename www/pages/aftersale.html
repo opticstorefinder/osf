@@ -1,0 +1,337 @@
+<template>
+    <div class="page" data-name="aftersale" ng-controller="AfterSaleController" ng-init="init()">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Après vente</div>
+                <div class="right"></div>
+            </div>
+        </div>
+
+        <div style="height: 0;"><input type="file" id="file" accept="image/*"/></div>
+        
+		<!--<div class="zinconfort" style="display:none">
+            <div style="margin-bottom:30px">Veuillez sélectionner la zone de l'incofort</div>
+			<img src="assets/img/av/zonedinconfort.png" usemap="#workmap" ng-click="ClickArea('VL gauche')"/>
+			<div class="f7-icons" ng-click="HideInconfort()">xmark_circle</div>
+		</div>-->
+
+		<!--<map id="workmap" name="workmap">
+			<area shape="poly" coords="254,350,551,154,810,119,1131,168,1359,316,1354,409,1038,501,547,494,333,440" onclick="aleo('Vision de loin')">
+			<area shape="poly" coords="245,430,381,505,459,635,424,754,353,842,255,677,218,485" onclick="aleo('Zone temp')">
+			<area shape="poly" coords="488,547,1015,548,1010,754,490,758" onclick="aleo('vision intermediaire')">
+			<area shape="poly" coords="1403,470,1181,869,1045,681" onclick="aleo('zone nasale')">
+			<area shape="poly" coords="395,848,740,1050,1115,898,920,807,624,797" onclick="aleo('vision de près')">
+		</map>-->
+
+        <div class="hider" ng-class="{'ng-hide': !disabled}"></div>
+
+        <div class="page-content">
+            
+            <div id="putmap"></div>
+            
+            <div style="padding: 40px 25px;">
+                <div class="timeline medium-sides">
+                    <!-- Avez-vous déjà reçu vos lunettes ? -->
+                    <div class="timeline-item cassedirecte" style="margin-bottom: -10px">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Avez-vous déjà reçu vos lunettes ?</div>
+                            <div class="hairs_color">
+                                <form class="list" style="margin-top: 0px; margin-bottom:0; text-transform: none;">
+                                    <div>
+                                        <ul>
+                                            <li class="item-content item-input">
+                                                <div class="item-inner">
+                                                    <div class="item-input-wrap input-dropdown-wrap">
+                                                        <select placeholder="Reçu vos lunettes ?" ng-model="recu">
+                                                            <option value=""></option>
+                                                            <option value="yes">Oui</option>
+                                                            <option value="no">Non</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Souhaitez-vous être rappelé ? -->
+                    <div class="timeline-item" style="margin-bottom: -10px" ng-show="recu=='no'">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Souhaitez-vous être rappelé ?</div>
+                            <div class="hairs_color">
+                                <form class="list" style="margin-top: 0px; margin-bottom:0; text-transform: none;">
+                                    <div>
+                                        <ul>
+                                            <li class="item-content item-input">
+                                                <div class="item-inner">
+                                                    <div class="item-input-wrap input-dropdown-wrap">
+                                                        <select placeholder="Veuillez choisir" ng-model="callback">
+                                                            <option value=""></option>
+                                                            <option value="yes">Oui</option>
+                                                            <option value="no">Non</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Merci pour votre confiance (FINISH) -->
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="(recu=='no') && (callback=='no')">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Merci pour votre confiance</div>
+                            <div style="width: 75%; margin: 0 auto; margin-top: 12px;">
+                                <a href="#" class="" ng-click="vote(2)">
+                                    <button class="col button button-raised button-fill button-small button-round button_green ">Valider</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Êtes-vous satisfaits ? -->
+                    <div class="timeline-item cassedirecte" ng-show="recu=='yes'">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">En êtes vous satisfait(e) ?</div>
+                            <div style="font-size:10px; color:#AAA; line-height:19px; margin-top:7px;">
+                                Une note <span class="f7-icons" style="font-size: 10px;">chevron_left</span> à 4* déclenche la possibilité d'être rappelé. 
+                                Votre note aide les autres à bénéficier des meilleurs services de 
+                                votre Opticien
+                            </div>
+                            <div class="notation" style="text-align: center;">
+                                <div class="f7-icons star" ng-class="{'gray': note<1}" ng-click="NoteAfterSale(1)">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'gray': note<2}" ng-click="NoteAfterSale(2)">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'gray': note<3}" ng-click="NoteAfterSale(3)">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'gray': note<4}" ng-click="NoteAfterSale(4)">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'gray': note<5}" ng-click="NoteAfterSale(5)">star_fill</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quelle en est l'origine ? -->
+                    <div class="timeline-item cassedirecte" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note!='' && note<=3)">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Quelle en est l'origine ?</div>
+                            <div class="hairs_color">
+                                <form class="list" style="margin-top: 0px; margin-bottom:0; text-transform: none;">
+                                    <div>
+                                        <ul>
+                                            <li class="item-content item-input">
+                                                <div class="item-inner">
+                                                    <div class="item-input-wrap input-dropdown-wrap">
+                                                        <select placeholder="Veuillez choisir" ng-model="origin">
+                                                            <option value=""></option>
+                                                            <option value="Esthétique">Esthétique</option>
+                                                            <option value="Inconfort">Inconfort</option>
+                                                            <option value="Casse">Casse</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Reprendre un rendez-vous (Esthétique) -->
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note<=3) && (origin=='Esthétique')">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div>
+                                <a href="#" ng-click="vote(4)">
+                                    <button class="col button button-raised button-fill button-small button-round">Reprendre un rendez-vous</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Zone de l'inconfort ? --
+                    <div class="timeline-item" style="margin-bottom: -10px" ng-show="(recu=='yes') && (origin=='Inconfort') && (note!='' && note<=3)">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Sélectionner la zone de votre inconfort</div>
+                            <div class="zone_inconfort" ng-click="ShowInconfort()">{{zoneinconfort}}</div>
+                        </div>
+                    </div>
+                    <!-- Être rappelé pour ... ? --
+                    <div class="timeline-item" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note<=3) && (origin=='Inconfort') && (zoneinconfort!='')">-->
+                    <div class="timeline-item" style="margin-bottom: -10px" ng-show="(recu=='yes') && (origin=='Inconfort') && (note!='' && note<=3)">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Souhaitez-vous être rappelé pour</div>
+                            <div class="hairs_color">
+                                <form class="list" style="margin-top: 0px; margin-bottom:0; text-transform: none;">
+                                    <div>
+                                        <ul>
+                                            <li class="item-content item-input">
+                                                <div class="item-inner">
+                                                    <div class="item-input-wrap input-dropdown-wrap">
+                                                        <select placeholder="Veuillez choisir" ng-model="reason_callback" placeholder="...">
+                                                            <option value=""></option>
+                                                            <option value="Blond">Des conseils de posture</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Reprendre un rendez-vous (Inconfort) --
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note<=3) && (origin=='Inconfort') && (zoneinconfort!='') && reason_callback">-->
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note<=3) && (origin=='Inconfort') && reason_callback">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div>
+                                <a href="#" ng-click="vote(5)">
+                                    <button class="col button button-raised button-fill button-small button-round">Reprendre un rendez-vous</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sélectionner la partie cassée ? -->
+                    <div class="timeline-item" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note<=3) && (origin=='Casse')">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Sélectionner la partie cassée</div>
+                            <div class="zone_casse">
+                                <ul>
+                                    <li ng-click="zonecasse='right'" ng-class="{'active': zonecasse=='right'}">
+                                        <div>
+                                            <div><img src="assets/img/optic/br_droite.png"/></div>
+                                            <div>Branche<br/>droite</div>
+                                        </div>
+                                    </li>
+                                    <li ng-click="zonecasse='left'" ng-class="{'active': zonecasse=='left'}">
+                                        <div>
+                                            <div><img src="assets/img/optic/br_gauche.png"/></div>
+                                            <div>Branche<br/>gauche</div>
+                                        </div>
+                                    </li>
+                                    <li ng-click="zonecasse='center'" ng-class="{'active': zonecasse=='center'}">
+                                        <div>
+                                            <div><img src="assets/img/optic/lunettes_cassees.png"/></div>
+                                            <div>Face<br/><span style="color:white">...</span></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Envoyer une photo -->
+                    <div class="timeline-item" style="margin-bottom: -10px" ng-show="zonecasse && (recu=='yes') && (note<=3) && (origin=='Casse')">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Envoyez une photo</div>
+                            <div class="image_casse" ng-click="getfile()">{{image_casse}}</div>
+                            <div class="join_pic" ng-click="getfile()">
+                                <i class="f7-icons">paperclip</i> Joindre une photo
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Envoyer à mon opticien -->
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="zonecasse && image_casse && (recu=='yes') && (note<=3) && (origin=='Casse')">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div>
+                                <a href="#" ng-click="vote(6)">
+                                    <button class="col button button-raised button-fill button-small button-round">Envoyer à mon opticien</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Votre opticien vous contactera (FINISH) -->
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="(recu=='no') && (callback=='yes')">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Votre opticien vous recontactera</div>
+                            <div style="width: 75%; margin: 0 auto; margin-top: 12px;">
+                                <a href="#" class="" ng-click="vote(1)">
+                                    <button class="col button button-raised button-fill button-small button-round button_green ">Valider</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Merci pour votre confiance (FINISH) -->
+                    <div class="timeline-item finish" style="margin-bottom: -10px" ng-show="(recu=='yes') && (note!='' && note>3)">
+                        <div class="timeline-item-date"></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-inner">Merci pour votre confiance</div>
+                            <textarea class="input_inconfort" placeholder="Commentaire ..." ng-show="note>=4" ng-model="comment"></textarea>
+                            <div style="width: 75%; margin: 0 auto; margin-top: 12px;">
+                                <a href="#" class="" ng-click="vote(3)">
+                                    <button class="col button button-raised button-fill button-small button-round button_green ">Valider</button>
+                                </a>
+                            </div>
+                            <div style="margin-top: 20px;font-size: 12px;border: solid 2px #EEE;padding: 10px;color: #888; line-height:20px;">
+                                Vous serez redirigé vers la page tendances. Vous avez la possibilité de faire un don de 1€ minimum en soutien à une association de votre choix en remerciement à l'opticien pour son travail.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+	export default function (props, { $f7, $on, $update }) {
+		// Component Data
+		//var self = this;
+		var id = props.id;
+		var opticien = {name:"toto"};
+
+		// Component Methods
+		const openAlert = () => {
+			$f7.dialog.alert("Hello World");
+		};
+        
+		// Page Events
+		$on("pageMounted", (e, page) => {
+			console.log("pageMounted", page);
+		});
+		$on("pageInit", (e, page) => {
+			global.rdv_id = id;
+            //debugger;
+            /*$$("#putmap").html('<map id="workmap" name="workmap"><area shape="poly" coords="254,350,551,154,810,119,1131,168,1359,316,1354,409,1038,501,547,494,333,440" onclick="aleo()"><area shape="poly" coords="245,430,381,505,459,635,424,754,353,842,255,677,218,485" onclick="aleo()"><area shape="poly" coords="488,547,1015,548,1010,754,490,758" onclick="aleo()"><area shape="poly" coords="1403,470,1181,869,1045,681" onclick="aleo()"><area shape="poly" coords="395,848,740,1050,1115,898,920,807,624,797" onclick="aleo()"></map>');
+            var map = document.querySelector('#workmap');
+            map.addEventListener("click", function() {
+                console.log("ok o");
+            }, false);*/
+		});
+
+		// Return render function
+		return $render;
+	}
+</script>

@@ -1,0 +1,911 @@
+
+    <div class="page page-home" data-name="home" ng-controller="HomeController" ng-init="init()" id="HomePageId">
+        <!-- Top Navbar -->
+        <div class="navbar">
+            <div class="navbar-bg main-bg" style="background-color: #fff;"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link icon-only panel-open" data-panel="left">
+                        <i class="icon f7-icons if-not-md" style="color: #000;">menu</i>
+                        <i class="icon material-icons if-md" style="color: #000;">menu</i>
+                    </a>
+                </div>
+                <!--<div class="title">Optic Store Finder</div>-->
+                <div class="closer" ng-show="menu_item=='vsg'" ng-click="ToogleOsf()">
+                    <i class="f7-icons" ng-show="closerBtnUp">arrow_up</i>
+                    <i class="f7-icons" ng-show="!closerBtnUp">arrow_down</i>
+                </div>
+                <div class="right">
+                    <a href="/favoris/" class="link icon-only">
+                        <i class="icon material-icons" style="color: #000;">star_border</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Toolbar--
+        <div class="toolbar toolbar-bottom">
+        <div class="toolbar-inner">
+            <a href="#" class="link">Left Link</a>
+            <a href="#" class="link">Right Link</a>
+        </div>
+        </div>-->
+
+        <!-- HELLO HELLO -->
+        <!-- HELLO HELLO --
+        <div class="zinconfort" style="display:none">
+            <img src="img/workplace.jpg" alt="Workplace" usemap="#workmap"/>
+        </div>
+        <map name="workmap">
+            <area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm">
+            <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">
+            <area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm">
+        </map>-->
+        
+        <!--<div class="zinconfort" style="display:none">
+            <div style="margin-bottom:30px">Veuillez sélectionner la zone de l'incofort</div>
+			<img src="assets/img/av/zonedinconfort.png" usemap="#workmap" ng-click="ClickArea('VL gauche')"/>
+			<div class="f7-icons" ng-click="HideInconfort()">xmark_circle</div>
+		</div>
+
+        <map id="workmap" name="workmap">
+			<area shape="poly" coords="254,350,551,154,810,119,1131,168,1359,316,1354,409,1038,501,547,494,333,440" onclick="aleo('Vision de loin')">
+			<area shape="poly" coords="245,430,381,505,459,635,424,754,353,842,255,677,218,485" onclick="aleo('Zone temp')">
+			<area shape="poly" coords="488,547,1015,548,1010,754,490,758" onclick="aleo('vision intermediaire')">
+			<area shape="poly" coords="1403,470,1181,869,1045,681" onclick="aleo('zone nasale')">
+			<area shape="poly" coords="395,848,740,1050,1115,898,920,807,624,797" onclick="aleo('vision de près')">
+		</map>-->
+        <!-- HELLO HELLO -->
+        <!-- HELLO HELLO -->
+
+		<div style="height: 0;"><input type="file" id="file" accept="image/*"/></div>
+        <img src="" id="profileimg" style="display:none"/><!---->
+
+        <div class="fab-backdrop"></div>
+        <div class="fab fab-right-bottom" ng-class="{'hidden': (menu_item!='vsg')}">
+            <a href="#" class="button_green" ng-class="{'hidden': (pageVsg!='page1')}">
+                <i class="icon f7-icons">camera</i>
+                <i class="icon f7-icons">camera_on_rectangle_fill</i>
+            </a>
+            <div class="fab-buttons fab-buttons-top">
+                <a class="fab-label-button button_green" href="#" ng-click="GetPicture('from_camera')"><span><i class="icon f7-icons" style="font-size:21px">camera_viewfinder</i></span><span class="fab-label">Prendre une photo</span></a>
+                <a class="fab-label-button button_green" href="#" ng-click="GetPicture('from_image')"><span><i class="icon f7-icons" style="font-size:21px">photo</i></span></span><span class="fab-label">Importer depuis la galerie</span></a>
+            </div>
+        </div>
+
+        <div class="OpticFirstLaunch">
+            <div class="ofl_close ng-hide" ng-hide="!PReady" onclick="document.querySelector('.OpticFirstLaunch').remove()">X</div>
+            <div class="ofl_text1 ng-hide" ng-hide="!PReady">{{ofl_1}}</div>
+            <div class="ofl_text2 ng-hide" ng-hide="!PReady">{{ofl_2}}</div>
+            <div class="ofl_text3 ng-hide" ng-hide="!PReady">{{ofl_3}}</div>
+            <div class="ofl_img ng-hide" ng-hide="!PReady"><img src="assets/img/ouv/pictopopup.png"/></div>
+            <div class="ofl_text4 ng-hide" ng-hide="!PReady">{{ofl_4}}<br>{{ofl_5}}</div>
+            <div class="ofl_btn ng-hide" ng-hide="!PReady">
+                <button class="col button button-raised button-fill button-round" onclick="SeConnecter()">Se connecter</button>
+            </div>
+        </div>
+
+        <div class="toolbar tabbar tabbar-labels toolbar-bottom" style="background-color: #fff; border-top: solid 1px #000; height: 85px; height: 65px;">
+            <div class="toolbar-inner" style="margin: 8px 0 8px 0; margin: 3px 0 0 0;">
+                <a href="#tab-home" class="tab-link tab-link-active" ng-click="setTab('home')" id="tab-home-link">
+                    <div class="icon material-icons" style="color: #000;">
+                        <img src="assets/img/home/menu_home.png" ng-show="menu_item!='home'"/>
+                        <img src="assets/img/home/menu_home_active.png" ng-show="menu_item=='home'" class="ng-hide" />
+                    </div>
+                    <span class="tabbar-label" ng-class="{'clr-active': menu_item=='home'}">Accueil</span>
+                </a>
+                <a href="#tab-rdv" class="tab-link" ng-click="setTab('rdv')" id="tab-rdv-link">
+                    <div class="icon f7-icons" style="color: #000;">
+                        <img src="assets/img/home/menu_rdv.png" ng-show="menu_item!='rdv'"/>
+                        <img src="assets/img/home/menu_rdv_active.png" ng-show="menu_item=='rdv'" class="ng-hide" class="ng-hide"  />
+                    </div>
+                    <span class="tabbar-label" ng-class="{'clr-active': menu_item=='rdv'}">Rendez-vous</span>
+                </a>
+                <a href="#tab-vsg" class="tab-link" ng-click="setTab('vsg')" id="tab-vsg-link">
+                    <div class="icon f7-icons" style="color: #000;">
+                        <img src="assets/img/home/menu_visagisme.png" ng-show="menu_item!='vsg'"/>
+                        <img src="assets/img/home/menu_visagisme_active.png" ng-show="menu_item=='vsg'" class="ng-hide" />
+                    </div>
+                    <span class="tabbar-label" ng-class="{'clr-active': menu_item=='vsg'}">Visagisme</span>
+                </a>
+                <a href="#tab-trends" class="tab-link" ng-click="setTab('trends')" id="tab-trends-link">
+                    <div class="bulle_green hidden"></div>
+                    <div class="icon f7-icons" style="color: #000;">
+                        <img src="assets/img/home/menu_trends.png" ng-show="menu_item!='trends'"/>
+                        <img src="assets/img/home/menu_trends_active.png" ng-show="menu_item=='trends'" class="ng-hide" />
+                    </div>
+                    <span class="tabbar-label" ng-class="{'clr-active': menu_item=='trends'}">Tendances</span>
+                </a>
+                <a href="#tab-user" class="tab-link" ng-click="setTab('account')" id="tab-user-link">
+                    <div class="icon f7-icons" style="color: #000;">
+                        <img src="assets/img/home/menu_compte.png" ng-show="menu_item!='account'"/>
+                        <img src="assets/img/home/menu_compte_active.png" class="ng-hide" ng-show="menu_item=='account'" class="ng-hide" />
+                    </div>
+                    <span class="tabbar-label" ng-class="{'clr-active': menu_item=='account'}">Mon compte</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="header_osf" onclick="GiresseStyle()">
+            <img src="assets/img/optic2.jpg" style="height: 100%;" />
+        </div>
+
+        <div class="header_edition" ng-show="mode=='edit'">
+            <div class="f7-icons uback" ng-click="mode='read'">arrow_uturn_left</div>
+            <div class="adjus_form">Ajuster la forme</div>
+            <ul>
+                <li><div class="f7-icons" ng-click="moveForm('left')">arrow_left</div></li>
+                <li><div class="f7-icons" ng-click="moveForm('right')">arrow_right</div></li>
+                <li><div class="f7-icons" ng-click="moveForm('down')">arrow_down</div></li>
+                <li><div class="f7-icons" ng-click="moveForm('up')">arrow_up</div></li>
+                <li><div class="f7-icons" ng-click="moveForm('zoom')">arrow_up_left_arrow_down_right</div></li>
+                <li><div class="f7-icons" ng-click="moveForm('pinch')">arrow_down_right_arrow_up_left</div></li>
+                <!--<li><div class="f7-icons" ng-click="mode='read'">arrow_uturn_left</div></li>-->
+            </ul>
+        </div>
+
+        <div class="tabs opt">
+            <div id="tab-home" class="page-content tab" ng-class="{'tab-active': menu_item=='home'}">
+                <div style="padding: 30px 40px 20px 40px; color: #098fa1; font-size: 20px; font-size: 14px; text-align: center; text-transform: uppercase;">
+                    <b>{{homepage_st1 || "LA COMMUNAUTÉ"}}</b><br>{{homepage_st2 || "DES PORTEURS DE LUNETTES ET DES OPTICIENS ENGAGÉS"}}
+                </div>
+    
+                <a href="/engagements/" class="item-content"><!-- /*onclick="window.open(encodeURI('https://opticsolutions.owiz.fittingbox.com/#/catalog'), '_system')"*/-->
+                    <div class="bluebloc green">
+                        <div class="kpm"><img src="assets/img/home/home_sc_engagementsmain.png" class="img_home_engage" /></div>
+                        <div class="indic">Les engagements</div>
+                    </div>
+                </a> 
+                <a href="/opticiens/" class="item-content item-link">
+                    <div class="bluebloc blue">
+                        <div class="kpm"><img src="assets/img/home/home_sc_localiser_blue.png" class="img_home_opticien" /></div>
+                        <div class="indic">Vos opticiens engagés</div>
+                    </div>
+                </a>
+                <a href="#" class="item-content" ng-click="setTab('vsg')">
+                    <div class="bluebloc cyan">
+                        <div class="kpm"><img src="assets/img/home/home_sc_conseilslunettes.png" class="img_home_visagism" /></div>
+                        <div class="indic">Nos conseils visagisme</div>
+                    </div>
+                </a>
+                <a href="#" class="item-content item-link" ng-click="GoAfterSale()">
+                    <div class="bluebloc yellow">
+                        <div class="kpm icon"><img src="assets/img/home/home_sc_sav.png" class="img_home_aftersale" /></div>
+                        <div style="position: absolute; margin: 50px 0 0 20px; color: #898989;">avec votre opticien</div>
+                        <div class="indic">L'après vente</div>
+                    </div>
+                </a>
+
+                <!--<ul class="url_links">
+                    <li onclick="window.open('http://axelib.com', '_system');">Method 1</li>
+                    <li onclick="window.open('http://axelib.com', '_blank');">Method 2</li>
+                    <li onclick="window.open('http://axelib.com', '_blank', 'location=no');">Method 3</li>
+                    <li onclick="window.open('http://axelib.com', '_self');">Method 4</li>                
+                    <li onclick="cordova.InAppBrowser.open('http://axelib.com', '_system');">Method 5</li>
+                </ul>-->
+
+                <!--
+                <div class="teso" back-src="https://mustcmzsfjqsriltocne.supabase.co/storage/v1/object/public/articles/colorimetrie.jpg"></div>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <div class="teso" back-src="https://mustcmzsfjqsriltocne.supabase.co/storage/v1/object/public/articles/colorimetrie.jpg"></div>
+                -->
+
+            </div>
+            <div id="tab-rdv" class="page-content tab" ng-class="{'tab-active': menu_item=='rdv'}">
+                <a href="/opticiens/">
+                    <div class="button_green takerdv"><i class="f7-icons">search</i> Prendre rendez-vous</div>
+                </a>
+                <div class="rdv_list">
+                    <ul>
+                        <li ng-class="{'active': rdv_tab=='coming'}" ng-click="rdv_tab='coming'">A VENIR</li>
+                        <li ng-class="{'active': rdv_tab=='past'}" ng-click="rdv_tab='past'">PASSÉS</li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <div ng-show="rdv_tab=='coming'" ng-click="rdv_tab='coming'" style="margin: 0 10px;">
+                        <!--<p>RENDEZ-VOUS à venir</p>-->
+                        <div class="nordv" ng-show="NbAvenir(rdvs)<=0">Aucun rendez-vous à venir</div>
+                        <div class="rdv" ng-repeat="rdv in rdvs | orderBy: 'rdvdate' track by rdv.id" ng-hide="checkFutur(rdv.rdvdate)">
+                            <div class="rdv_date">
+                                {{getDate(rdv, 'day')}} {{getDate(rdv, 'date')}} {{getDate(rdv, 'month')}} à {{rdv.time.substring(0, 5)}}
+                            </div>
+                            <div class="rdv_esta">
+                                <table>
+                                    <tr ng-click="OpenOpticien(rdv.opticien.id)">
+                                        <td><img ng-src="{{rdv.opticien.image || 'assets/img/no.png'}}" style="width:100%; border-radius:10px;"/></td>
+                                        <td>
+                                            <div class="f7-icons" style="cursor: pointer;">arrow_right_circle_fill</div>
+                                            <span>{{rdv.opticien.name}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="rdv_actions">
+                                <button class="col button button-raised button-fill button-small button-round sheet-open" data-sheet=".my-sheet-forms" ng-show="!rdv.incident" ng-click="SetCurrentRdv(rdv)">Transmettre mes formes de montures</button>
+                                <button class="col button button-raised button-fill button-small button-round color-black" ng-click="CancelRdv(rdv)">Annuler le rendez-vous</button>
+                                <div class="trans_ordonnance" ng-click="SendOrdonnance(rdv)"><span class="f7-icons">paperclip</span> Transmettre mon ordonnance</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="rdv_tab=='past'" ng-click="rdv_tab='past'" style="margin: 0 10px;">
+                        <!--<p>RENDEZ-VOUS passés</p>-->
+                        <div class="nordv" ng-show="NbPassed(rdvs)<=0">Aucun rendez-vous passé</div>
+                        <div class="rdv" ng-repeat="rdv in rdvs | orderBy: '-rdvdate' track by rdv.id" ng-show="checkFutur(rdv.rdvdate)">
+                            <div class="rdv_date">
+                                {{getDate(rdv, 'day')}} {{getDate(rdv, 'date')}} {{getDate(rdv, 'month')}} à {{rdv.time.substring(0, 5)}}
+                            </div>
+                            <div class="rdv_esta">
+                                <table>
+                                    <tr ng-click="OpenOpticien(rdv.opticien.id)">
+                                        <td><img ng-src="{{rdv.opticien.image || 'assets/img/no.png'}}" style="width:100%; border-radius:10px;"/></td>
+                                        <td>
+                                            <div class="f7-icons" style="cursor: pointer;">arrow_right_circle_fill</div>
+                                            <span>{{rdv.opticien.name}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="rdv_actions">
+                                <a href="/aftersale/{{rdv.id}}/" ng-if="!rdv.note" ng-show="rdv.status!='submitted'">
+                                    <button class="col button button-raised button-fill button-small button-round">Après vente</button>
+                                </a>
+                                <a href="#" ng-if="rdv.note && rdv.status!='submitted'" class="disabled">
+                                    <button class="col button button-raised button-fill button-small button-round" disabled>Terminé</button>
+                                </a>
+                                <a href="#" ng-show="rdv.status=='submitted'">
+                                    <button class="col button button-raised button-fill button-small button-round waiting">Soumis à l'opticien</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-vsg" class="page-content tab" ng-class="{'tab-active': menu_item=='vsg'}">
+                
+                <div class="vsg_page_1" ng-show="pageVsg=='page1'">
+                    <div class="vsg_graydv pic_area" style="background-image: url('assets/img/no2.png'); background-repeat: no-repeat; background-size: 100% auto;">
+                        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="0" data-direction="vertical" class="swiper swiper-init demo-swiper swiper-forms">
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" ng-if="!firstPicTaken">
+                                    <div>{{vsg_takepic}}</div>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <span style="background-color:rgba(0,0,0,0.35); margin-right:30px;">{{vsg_swipe}}</span>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <div class="xform form_circle">
+                                        <img src="assets/img/vsg/rond.png"/>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <div class="xform form_ovale">
+                                        <img src="assets/img/vsg/ovale.png"/>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <div class="xform form_carre">
+                                        <img src="assets/img/vsg/carre.png"/>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <div class="xform form_triangle_down">
+                                        <img src="assets/img/vsg/trianglbas-coeur.png"/>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <div class="xform form_triangle_up">
+                                        <img src="assets/img/vsg/triangle-haut.png"/>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" ng-show="firstPicTaken">
+                                    <div class="xform form_rectangle">
+                                        <img src="assets/img/vsg/rectangle.png"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fab fab-edit" ng-class="{'hidden': menu_item!='vsg'}" style="display:none;">
+                        <a href="#" ng-show="mode=='read'" ng-click="mode='edit'">
+                            <i class="icon f7-icons">pencil</i>
+                        </a>
+                        <a href="#" ng-show="mode=='edit'" ng-click="GoNext()" class="success">
+                            <i class="icon f7-icons">checkmark_alt</i>
+                        </a>
+                    </div>
+    
+                    <div class="vsg_down" style="display:none">
+                        <div data-speed="900" data-pagination='{"el": ".swiper-pagination"}' data-space-between="50" class="swiper swiper-init demo-swiper swiper-description" style="margin-top:-50px">
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="vsg_title2 1st">Visage carré</div>
+                                    <div class="vsg_body1 1st">
+                                        Front large, mâchoire saillante. Lignes bien définies, contour anguleux.
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" ng-repeat="item in table_forms[form].details">
+                                    <div class="vsg_body1">
+                                        <div class="row">
+                                            <div class="col-10"><img src="assets/img/face/ampoule.png" style="width:30px"/></div>
+                                            <div class="col-90" style="padding-top:7px">{{item}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+                <div class="vsg_page_2" ng-show="pageVsg=='page2'">
+                    <div class="vsg_graydv" style="padding-top:20px; padding-bottom:12px;">
+                        <div class="timeline medium-sides">
+                            <div class="timeline-item">
+                                <div class="timeline-item-date">&nbsp;</div>
+                                <div class="timeline-item-divider"></div>
+                                <div class="timeline-item-content">
+                                    <div class="timeline-item-inner">Sélectionnez la couleur de vos yeux</div>
+                                    <div class="eyes_color">
+                                        <table>
+                                            <tr>
+                                                <td><div class="dark"  ng-click="eyes_color='dark'"  ng-class="{'active': eyes_color=='dark'}"></div></td>
+                                                <td><div class="brown" ng-click="eyes_color='brown'" ng-class="{'active': eyes_color=='brown'}"></div></td>
+                                                <td><div class="green" ng-click="eyes_color='green'" ng-class="{'active': eyes_color=='green'}"></div></td>
+                                                <td><div class="blue"  ng-click="eyes_color='blue'"  ng-class="{'active': eyes_color=='blue'}"></div></td>
+                                                <td><div class="gray"  ng-click="eyes_color='gray'"  ng-class="{'active': eyes_color=='gray'}"></div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-item-date">&nbsp;</div>
+                                <div class="timeline-item-divider"></div>
+                                <div class="timeline-item-content">
+                                    <div class="timeline-item-inner">Sélectionnez votre teint</div>
+                                    <div class="skins_color">
+                                        <ul>
+                                            <li><div class="clr1" ng-class="{'active': color=='clr1'}" ng-click="setColor('clr1')"></div></li>
+                                            <li><div class="clr2" ng-class="{'active': color=='clr2'}" ng-click="setColor('clr2')"></div></li>
+                                            <li><div class="clr3" ng-class="{'active': color=='clr3'}" ng-click="setColor('clr3')"></div></li>
+                                            <li><div class="clr4" ng-class="{'active': color=='clr4'}" ng-click="setColor('clr4')"></div></li>
+                                            <li><div class="clr5" ng-class="{'active': color=='clr5'}" ng-click="setColor('clr5')"></div></li>
+                                            <li><div class="clr6" ng-class="{'active': color=='clr6'}" ng-click="setColor('clr6')"></div></li>
+                                            <li><div class="clr7" ng-class="{'active': color=='clr7'}" ng-click="setColor('clr7')"></div></li>
+                                            <li><div class="clr8" ng-class="{'active': color=='clr8'}" ng-click="setColor('clr8')"></div></li>
+                                            <li><div class="clr9" ng-class="{'active': color=='clr9'}" ng-click="setColor('clr9')"></div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" style="margin-bottom: -10px">
+                                <div class="timeline-item-date">&nbsp;</div>
+                                <div class="timeline-item-divider"></div>
+                                <div class="timeline-item-content">
+                                    <div class="timeline-item-inner">Sélectionnez la couleur de vos cheveux</div>
+                                    <div class="hairs_color">
+                                        <form class="list" style="margin-top: 0px; margin-bottom:0; text-transform: none;">
+                                            <div>
+                                                <ul>
+                                                    <li class="item-content item-input">
+                                                        <div class="item-inner">
+                                                            <div class="item-input-wrap input-dropdown-wrap">
+                                                                <select placeholder="Veuillez choisir" placeholder="Cheveux foncés (châtain cendré, brun foncé, noir ...)" ng-model="season">
+                                                                    <option value="">&nbsp;</option>
+                                                                    <option value="printemps">Cheveux clairs (blond, blond vénitien, reflets dorés…)</option>
+                                                                    <option value="été">Cheveux clairs (blond ou châtain clair aux reflets cendrés)</option>
+                                                                    <option value="automne">Cheveux foncés (reflets chauds, roux, cuivré...)</option>
+                                                                    <option value="hiver">Cheveux foncés (châtain froid, brun foncé, noir…)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="season!=''" style="margin-top:20px">
+                        <div class="vsg_title">{{season}}</div>
+                        <div class="vsg_text_content">
+                            {{colorimetrie[season].description}}
+                        </div>
+                        <div class="vsg_title green"><i class="f7-icons">eyeglasses</i></div>
+                        <div class="vsg_text_content">
+                            {{colorimetrie[season].info}}
+                        </div>
+                        <div class="vsg_title red"><i class="f7-icons">eyeglasses</i></div>
+                        <div class="vsg_text_content">
+                            {{colorimetrie[season].attention}}
+                        </div>
+                    </div>
+                    <div ng-show="season!=''" style="margin:20px 40px 0 40px">
+                        <a class="button button-fill button-round" href="#" ng-click="GoNext()">Valider</a>
+                    </div>
+                    <div class="goprev" ng-click="GoPrev()"><a href="#">retour</a></div>
+                </div>
+
+                
+                <div class="vsg_page_3" ng-show="pageVsg=='page3'">
+                    <div class="vsg_graydv" style="padding-top: 15px; padding-bottom:20px">
+                        <!--<div class="vsg_big_title">Résumé</div>
+                        <div class="vsg_info_bulle">
+                            <div class="lgt_blb_vsg1"><img src="assets/img/face/ampoule.png"></div>
+                            Autres formes
+                        </div>-->
+                        <div class="vsg_info_block">
+                            <div class="head">
+                                <div class="lgt_blb_vsg2"><img src="assets/img/face/ampoule.png"></div>
+                                Astuces formes 
+                            </div>
+                            
+                            <div class="bibidu">
+                                {{item}}
+                            </div>
+                            
+                            <div ng-repeat="item in table_forms[form].details">
+                                {{item}}
+                            </div>
+
+                            <div class="sub">
+                                A vous de choisir le style qui vous définit le mieux !
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin:15px 40px">
+                        <button class="col button button-raised button-fill button-round" ng-class="{'disabled': !isLoggedIn()}" ng-click="SavePreferences()">Sauvegarder mes choix</button>
+                        <div class="save_not_logged_in" ng-class="{'hidden': isLoggedIn()}" ng-click="setTab('account')">
+                            Veuillez vous connecter pour bénéficier de la sauvegarde
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="tab-trends" class="page-content tab" ng-class="{'tab-active': menu_item=='trends'}">
+                <div style="position: absolute; right: 15px; width: 16px;margin-top: 20px;"><img src="assets/img/home/bell.png" style="width:100%"/></div>
+                <div style="background-color: #F2F2F2; padding-top: 30px; padding-bottom:30px;">
+                    <div class="block" style="margin-top: 0;">
+                        <p style="color: var(--f7-theme-color); letter-spacing:3px; font-weight:bold;">
+                            {{tendances_st1}}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;{{tendances_st2}}
+                        </p>
+
+                        <div class="trends_btn">
+                            <ul>
+                                <li ng-class="{'active': trend_menu=='discover'}" ng-click="trend_menu='discover'">Découvrir</li>
+                                <li ng-class="{'active': trend_menu=='saved'}" ng-click="ShowSaved()">Sauvegardés</li>
+                                <li class="art_reloader" ng-click="reloadArticles()">
+                                    <a href="#" class="link" ng-click="init()">
+                                        <div class="f7-icons">arrow_counterclockwise</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="top_news art_skeleton">
+                            <a href="#">
+                                <img src="assets/img/top_trend.png" />
+                            </a>
+                        </div>
+                        
+                        <div class="top_news" ng-show="(trend_menu!='saved') || ((trend_menu=='saved') && top_article.saved)" ng-if="top_article">
+                            <a href="#" class="sheet-open" data-sheet=".my-sheet-swipe-to-close" ng-click="setArticle(top_article)">
+                                <img src="assets/img/top_trend.png" real-src="{{top_article.image}}" />
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div style="background-color:#FFF; min-height:300px; margin-top:-50px; border-radius:40px 40px 0 0; box-shadow:0 -5px 5px -5px #a9a9a9;">
+
+                    <div class="sub_trends_area art_skeleton">
+                        <div class="ttitle">
+                            <div style="width:150px; height:15px; background-color:#CCC;"></div>
+                        </div>
+                        <div style="overflow-x: scroll;">
+                            <div>
+                                <ul>
+                                    <li style="background-color: #CCC;">
+                                        <div>. . .</div>
+                                    </li>
+                                    <li style="background-color: #CCC;">
+                                        <div>. . .</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub_trends_area" ng-repeat="trend in trends" ng-show="trend.tendances_articles.length>0">
+                        <div class="ttitle">{{trend.name}}</div>
+                        <div class="scroller" style="overflow-x: scroll;">
+                            <div ng-style="{ 'width': (trend.tendances_articles.length * (112 + 2)) + 'px' }"><!--style="min-width: 500px;"-->
+                                <ul><!--
+                                    <li ng-repeat="article in trend.tendances_articles" ng-show="(trend_menu!='saved') || ((trend_menu=='saved') && article.saved)" ng-click="setArticle(article)" style="background-image:url({{article.image}});" class="sheet-open" data-sheet=".my-sheet-swipe-to-close">-->
+                                    <li ng-repeat="article in trend.tendances_articles" ng-show="(trend_menu!='saved') || ((trend_menu=='saved') && article.saved)" ng-click="setArticle(article)" style="background-image:url('assets/img/no2.png');" class="sheet-open" data-sheet=".my-sheet-swipe-to-close" back-src="{{article.image}}">
+                                        <div class="coeurholliday" style="color:#FFF !important">{{article.titre}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="tab-user" class="page-content tab" ng-class="{'tab-active': menu_item=='account'}">
+                <div style="font-size:14px; display: none;" id="page_profile">
+                    <div class="profile_blue_area">
+                        <div class="pf_help">
+                            <a href="/howitworks/">
+                                <img src="assets/img/acc/aide.png" style="width: 75px;">
+                            </a>
+                        </div>
+                        <div class="pf_full_name">{{user.user_metadata.full_name}}</div>
+                        <div class="pf_email">{{user.email}}</div>
+                        <div class="pf_phone">{{user.user_metadata.telephone}}</div>
+                        <ul>
+                            <li>
+                                <a href="/profile/" style="color: #FFF;">
+                                    <div><img src="assets/img/home/menu_compte_white.png"></div>
+                                    Mon profil
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/essayages/" style="color: #FFF;">
+                                    <div><img src="assets/img/acc/mesessayages.png"></div>
+                                    Mes essayages
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="profile_white_above">
+                        <ul>
+                            <!--<li>
+                                <div><img src="assets/img/acc/mesproches.png"/></div>
+                                <span>Mes proches</span>
+                                <span class="gray">Ajoutez les profils de vos proches</span>
+                            </li>-->
+                            <li>
+                                <a href="/favoris/" style="color: #FFF;">
+                                    <div><img src="assets/img/acc/mesfavoris.png"/></div>
+                                    <span>Mes favoris</span>
+                                    <span class="gray">Mes opticiens favoris</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/parameters/" style="color: #FFF;">
+                                    <div><img src="assets/img/acc/parametres.png"/></div>
+                                    <span>Paramètres de sécurité</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/partner/" style="color: #FFF;">
+                                    <div><img src="assets/img/acc/devenirpartenaire.png"/></div>
+                                    <span>Devenir partenaire</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/legal/" style="color: #FFF;">
+                                    <div><img src="assets/img/acc/mentionslegales.png"/></div>
+                                    <span>Mentions légales</span>
+                                </a>
+                            </li>
+                            <li style="height:5px; margin-bottom: 15px;">
+                                <div class="pidica" ng-click="OpenExternalLink('instagram')"><img src="assets/img/insta-icon.png" style="height: 26px !important; margin-left:10px;"/></div>
+                                <div class="pidica" ng-click="OpenExternalLink('facebook')"><img src="assets/img/fb_circle.png" style="margin-top: -1px;"/></div>
+                            </li>
+                            <li ng-click="logout()">
+                                <div><img src="assets/img/acc/deconexion.png"/></div>
+                                <span class="red">Déconnexion</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="block" style="font-size:14px;" id="formulaire_login">
+                    <p style="text-align: center;">Connectez-vous pour accéder aux contenus privés</p>
+                    <div class="around_login">
+                        <div class="logoLiftr"  @click="${TestoZero}"><img src="assets/img/logo.png" ng-click="SetMeUser()"/></div>
+
+                        <form class="list" id="my-form" style="margin-top: 0px; margin-bottom: 15px;">
+                            <div id="login_form">
+                                <ul>
+                                    <li class="item-content item-input">
+                                        <div class="item-inner"><!--
+                                            <div class="f7-icons" style="position: absolute; margin:21px 0 0 -10px; font-size: 24px; color: #A1A1A1;">person_circle_fill</div>-->
+                                            <div class="item-title item-floating-label">Identifiant</div>
+                                            <div class="item-input-wrap">
+                                                <input type="email" placeholder="Votre adresse email" ng-model="email" required />
+                                                <span class="input-clear-button"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-floating-label">Mot de passe</div>
+                                            <div class="item-input-wrap">
+                                                <input type="password" placeholder="Saisissez votre mot de passe" ng-model="password" required/>
+                                                <span class="input-clear-button"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title rememberme">Se souvenir de moi</div>
+                                                <div class="item-after">
+                                                    <label class="toggle toggle-init"> <input type="checkbox" checked name="toggle" value="yes" id="rememberme" /><i class="toggle-icon"></i> </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important;">
+                                    <div class="col"><a class="button button-fill button-round" id="loginbtn" href="#" ng-click="Login()">Connexion</a></div>
+                                </div>
+                                
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 10px !important; padding-bottom: 0 !important;">
+                                    <div class="col"><a class="button" href="#" onclick="$('#register_form').show(); $('#login_form').hide();" style="font-size:12px">Inscrivez-vous</a></div>
+                                </div>
+                                
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 10px !important; padding-bottom: 0 !important;">
+                                    <div class="col"><a class="button" href="#" onclick="$('#forgot_form').show(); $('#login_form').hide();" style="font-size:12px; margin-top:-10px; text-transform:none;">Mot de passe oublié ?</a></div>
+                                </div>
+                                
+                            </div>
+
+                            <div id="register_form" style="display: none;">
+                                <ul>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Identifiant * (adresse email)</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="text" name="login" placeholder="" ng-model="reg_login" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Prénom / Nom *</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="text" name="firstname" placeholder="" ng-model="reg_fullname" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Mot de passe *</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="password" name="password" placeholder="" ng-model="reg_password" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Confirmer le Mot de passe *</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="password" name="password" placeholder="" ng-model="reg_password_confirm" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Téléphone</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="text" name="phone" placeholder="" ng-model="reg_phone" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner no-after">
+                                                <div class="item-title" style="font-size:12px;"><a href="/cgu/">Condition générales d'utilisation</a></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title" style="font-size:12px;">Accepter les CGU</div>
+                                                <div class="item-after">
+                                                    <label class="toggle toggle-init"> <input type="checkbox" name="toggle" value="yes" ng-model="acceptcgu" /><i class="toggle-icon"></i> </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top:15px !important;">
+                                    <div class="col">
+                                        <button class="button button-fill button-round" ng-click="register()" ng-disabled="!acceptcgu">Inscription</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 15px !important; padding-bottom: 0 !important;">
+                                    <div class="col"><a class="button" href="#" onclick="$('#register_form').hide(); $('#login_form').show();">Connectez-vous</a></div>
+                                </div>
+                                
+                            </div>
+
+
+                            <div id="forgot_form" style="display: none;">
+                                <ul>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Identifiant *</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="text" name="login" placeholder="" ng-model="forgot_login" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top:15px !important;">
+                                    <div class="col"><a class="button button-fill button-round" href="#" ng-click="forgotpw()">Réinitialiser</a></div>
+                                </div>
+                                
+                                <div class="block block-strong row no-after no-before" style="margin: 0 !important; padding-top: 15px !important; padding-bottom: 0 !important;">
+                                    <div class="col"><a class="button" href="#" onclick="$('#forgot_form').hide(); $('#login_form').show();">Connectez-vous</a></div>
+                                </div>
+                                
+                            </div>
+
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        <!--<div class="sheet-modal my-sheet-swipe-to-close" style="height: 100vh; --f7-sheet-bg-color: #fff;">
+            <div class="sheet-modal-inner">
+                <div class="art_close sheet-close"><i class="f7-icons">xmark</i></div>
+                <div class="page-content">
+                    <div class="img_ctnr">
+                        <div style="background-image: url({{current.image}})"></div>
+                    </div>
+                    <div class="ppbuddy">
+                        <ul>
+                            <li><div><img src="assets/img/fb_circle.png" style="width:30px; position:absolute; margin:-24px 0 0 -32px;"/></div></li>
+                            <li><div><img src="assets/img/insta-icon.png" style="width:28px; position:absolute; margin:-24px 0 0 -26px;"/></div></li>
+                            <li><div class="material-icons shr" ng-click="Share()">share</div></li>
+                            <li ng-show="!current.saved"><div class="f7-icons" ng-click="SaveArticle(current, true)">bookmark</div></li>
+                            <li ng-show="current.saved"><i class="f7-icons" ng-click="SaveArticle(current, false)">bookmark_fill</i></li>
+                        </ul>
+                        <div class="mLine"></div>
+                        <div class="art_title">{{current.titre}}</div>
+                        <div class="art_subtitle">{{current.soustitre}}</div>
+                        <div class="block" ng-bind-html="current.contenu"></div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+
+        
+        <div class="sheet-modal my-sheet-forms" style="height: 100vh; --f7-sheet-bg-color: #fff;">
+            <div class="sheet-modal-inner">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner sliding">
+                        <div class="left">
+                            <a href="#" class="sheet-close">
+                                <i class="icon icon-back"></i>
+                                <span class="if-not-md">Back</span>
+                            </a>
+                        </div>
+                        <div class="title">Transmettre mes formes de monture</div>
+                        <div class="right">
+                            <a href="#" class="link" ng-click="sendforms()" ng-show="EssayagesSelected()>0">
+                                <div class="f7-icons">envelope</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content" style="padding-top: 0;">
+                    
+                    <div style="padding-left: 15px; padding-right: 15px; background-color: #F2F2F2; padding-bottom: 80px;">
+                        &nbsp;
+                        <div class="op_text_circle">
+                            <div class="title">Mes essayages</div>
+                            <div class="content">
+                                Choisissez vos formes de montures que vous souhaitez transmettre à l'opticien pour la préparation de votre rendez-vous
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="above_list_optk">
+            
+                        <form class="list" style="margin-top: 0px; margin-bottom: 15px; text-transform: none;">
+                            <div style="margin:20px 0 0 0">
+            
+                                <ul class="essayage_list">
+                                    <li ng-repeat="essayage in essayages">
+                                        <img id="id_ess_{{essayage.id}}" ng-src="{{essayage.image}}" crossorigin="anonymous" style="width:150px; display: none;"/>
+                                        <div ng-style="{'background-image': 'url(' + essayage.image + ')'}" ng-click="chooseEssayage(essayage)" ng-class="{'essayage_selected': (essayage.selected==true)}">
+                                            <div class="f7-icons" ng-show="essayage.selected">checkmark_alt_circle_fill</div>
+                                        </div>
+                                    </li>
+                                </ul>
+            
+                            </div>
+                        </form>
+            
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+

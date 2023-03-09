@@ -1,0 +1,180 @@
+<template>
+    <div class="page" data-name="parameters-perso" ng-controller="ParametersController" ng-init="init()">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Paramètres avancés</div>
+            </div>
+        </div>
+
+        <div class="page-content parameter-security security2">
+            <div style="padding-left: 15px; padding-right: 15px; background-color: #F2F2F2; padding-bottom: 80px;">
+                
+                <div class="op_text_circle" id="block-1" style="display:none">
+                    <div class="title">Visibilité</div>
+                    <div class="content">
+                        <span>Qui peut voir mon profil ?</span>
+                        <div class="list simple-list">
+                            <ul>
+                                <li>
+                                    <span>Uniquement mon opticien favoris </span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_profile_visibility_fav" />
+                                        <span class="toggle-icon" ng-click="reverseValue('no_p_profile_visibility_fav')"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <span>Personne</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.no_p_profile_visibility_fav" />
+                                        <span class="toggle-icon" ng-click="reverseValue('p_profile_visibility_fav')"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="op_text_circle" id="block-2" style="display:none">
+                    <div class="title">Visibilité</div>
+                    <div class="content">
+                        <span>Qui peut télécharger mes données ?</span>
+                        Lorsque vous réserver un rendez-vous, le professionnel peut avoir besoin de télécharger vos données pour les besoins de traitement de la commande
+                        <div class="list simple-list">
+                            <ul>
+                                <!--<li>
+                                    <span>Uniquement mon opticien favoris</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_profile_data_fav" />
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <span>Personne</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-checked="!pref.p_profile_data_fav" />
+                                        <span class="toggle-icon" ng-click="pref.p_profile_data_fav=!pref.p_profile_data_fav"></span>
+                                    </label>
+                                </li>-->
+                                <li>
+                                    <span>Uniquement mon opticien favoris</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_profile_data_fav" />
+                                        <span class="toggle-icon" ng-click="reverseValue('no_p_profile_data_fav')"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <span>Personne</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.no_p_profile_data_fav" />
+                                        <span class="toggle-icon" ng-click="reverseValue('p_profile_data_fav')"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="op_text_circle" id="block-3" style="display:none">
+                    <div class="title">Notifications</div>
+                    <div class="content">
+                        <span>Comment souhaitez-vous recevoir les notifications ?</span>
+                        Choisissez le canal par lequel vous recevPar quel canal souhaitez-vous recevoir les notifications de l'application
+                        <div class="list simple-list">
+                            <ul>
+                                <li>
+                                    <span>Push (mobile)</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_push_notifications" />
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="op_text_circle" id="block-4" style="display:none">
+                    <div class="title">Notifications</div>
+                    <div class="content">
+                        <span>Recevoir les informations sur les tendances</span>
+                        Restez informé sur les denrières tenandes en les recevant une notification lors de leur publications
+                        <div class="list simple-list">
+                            <ul>
+                                <li>
+                                    <span>Push (mobile)</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_trends_notifications" />
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="op_text_circle" id="block-5" style="display:none">
+                    <div class="title">Notifications</div>
+                    <div class="content">
+                        <span>Recevoir les notifications sur les offres de votre opticien favori</span>
+                        Lorsque ce dernier mettra à disposition de nouvelles offres vous serez informés sur le canal souhaité
+                        <div class="list simple-list">
+                            <ul>
+                                <li>
+                                    <span>Push (mobile)</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_offers_notifications_push" />
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <span>Email</span>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" ng-model="pref.p_offers_notifications_email" />
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="op_text_circle" id="block-7" style="display:none">
+                    <div class="title">Localisation de vos données</div>
+                    <div class="content">
+                        <span>Supabase Inc</span>
+                        Vos données sont hébergées par Supabase sur un datacenter Amazon (AWS) dans la région Europe de l'Ouest (eu-west-1) conformément au RGPD
+                        <img src="assets/img/supabase.png" style="display:block; margin:0 auto; width: 200px; margin-top:25px;"/>
+                        <img src="assets/img/aws.png" style="display:block; margin:0 auto; width: 100px; margin-top:30px; margin-bottom:20px;"/>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+	export default function (props, { $f7, $on, $update }) {
+		// Component Data
+		var id = props.id;
+
+		// Page Events
+		$on("pageMounted", (e, page) => {
+			console.log("pageMounted", page);
+		});
+		$on("pageInit", (e, page) => {
+			var self = this;
+			console.log("pageInit", page);
+            MyApp.fw7.app.emit("parameter", id);
+		});
+		// Return render function
+		return $render;
+	}
+</script>

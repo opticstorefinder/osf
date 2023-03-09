@@ -1,0 +1,372 @@
+<template>
+	<div class="page opticien" data-name="opticien" ng-controller="OpticienController" ng-init="init()">
+		<div class="navbar">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner sliding">
+				<div class="left">
+					<a href="#" class="link back">
+						<i class="icon icon-back"></i>
+						<span class="if-not-md">Back</span>
+					</a>
+				</div>
+				<div class="title">Mon opticien</div>
+				<div class="right">
+					<a href="#" class="link" @click="${like}" id="idontlike">
+						<i class="f7-icons">heart</i>
+					</a>
+					<a href="#" class="link" @click="${unlike}" id="ilike" style="display: none;">
+						<i class="f7-icons">heart_fill</i>
+					</a>
+					<a href="#" class="link" ng-click="Share()" style="margin-left:-7px;">
+						<div class="material-icons">share</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="page-content" style="background-color: #F2F2F2;">
+
+			<div class="opticien_blue_area" style="min-height:130px; padding-bottom:70px;">
+				<div class="row no-gap" style="padding-top:20px">
+					<div class="col-40 imgr"><img src="assets/img/no.png" real-src=${opticien.image}/></div>
+					<div class="col-60 contr">
+						<div class="optic_title">${opticien.name}</div>
+						<table cellspacing="0" cellpadding="0">
+							<tr>
+								<td rowspan="2"><div><img src="assets/img/optic/horaires.png"/></div></td>
+								<td>${opticien.ouverture}</td>
+							</tr>
+							<tr>
+								<td>${opticien.horaires}</td>
+							</tr>
+						</table>
+						<div class="opt_adr">${opticien.adresse}, ${opticien.CodePostal}, ${opticien.Ville}</div>
+						<div class="opt_web" ng-click="OpenExternalLink()">${opticien.website}</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="above_list_optk on_opticien">
+
+				<div class="list media-list inset" style="margin-top: 20px; text-align: left;">
+					
+					<div class="optic_title">${opticien.name}</div>
+					<div class="optic_expertize">${opticien.description}</div>
+					<div class="f7-icons star" ng-class="{'gray': optic.stars<1}">star_fill</div>
+					<div class="f7-icons star" ng-class="{'gray': optic.stars<2}">star_fill</div>
+					<div class="f7-icons star" ng-class="{'gray': optic.stars<3}">star_fill</div>
+					<div class="f7-icons star" ng-class="{'gray': optic.stars<4}">star_fill</div>
+					<div class="f7-icons star" ng-class="{'gray': optic.stars<5}">star_fill</div>
+					<div class="displayPosition" ng-show="optic.distance">
+						<div class="f7-icons" style="font-size:15px; margin-right:4px;">placemark</div>
+						${opticien.distance}
+					</div>
+
+					<img src="assets/img/nopub.png" real-src=${opticien.encart1} ng-show="optic.encart1" style="width:100%; margin-top:20px; border-radius: 10px;"/>
+
+					<div class="carousel carousel-1">
+						<div>
+							<ul>
+								<li ng-show="optic.is_verifvue"><div><img src="assets/img/optic/examendevue.png" style="margin-top: 25px;"/></div><div class="subi">Vérification vue</div></li>
+								<li ng-show="optic.is_downtown"><div><img src="assets/img/optic/centreville.png" style="margin-top: 4px;"/></div><div class="subi">Centre ville</div></li><!--
+								<li><div><img src="assets/img/optic/uvprotection.png" style="margin-top: 28px;"/></div><div class="subi">UV protection</div></li>
+								<li><div><img src="assets/img/optic/lunettesdesport.png" style="margin-top: 24px;"/></div><div class="subi">Sport</div></li>-->
+								<li ng-show="optic.is_mall"><div><img src="assets/img/optic/centrecommercial.png" style="margin-top: 10px;"/></div><div class="subi">Centre commercial</div></li>
+								<li ng-show="optic.is_handicap"><div><img src="assets/img/optic/acceshandicape.png" style="margin-top: 6px;"/></div><div class="subi">Accès handicapé</div></li>
+								<li ng-show="optic.is_lens"><div><img src="assets/img/optic/lens.png" style="margin-top:16px;"/></div><div class="subi">Adaptation lentilles</div></li>
+								<li ng-show="optic.is_home"><div><img src="assets/img/howto/optidomicile.png" style="margin-top:5px; width:60%;"/></div><div class="subi">Déplacement à domicile</div></li>
+							</ul>
+						</div>
+					</div>
+					
+					<!-- -->
+					
+					<div class="optic_tit_cat">Montures</div>
+					
+					<!-- V2
+					<div class="nSubText">Selectionnez un materiau et découvrez tous ses avantages *</div>
+
+					<div class="carousel carousel-2">
+						<div>
+							<ul>
+								<li ng-repeat="mat in matieres track by mat.id" class="{{mat.class}}" ng-class="{'mat-active': mat.active==true}" ng-click="changematiere(mat.id)">{{mat.name}}</li>
+							</ul>
+						</div>
+					</div>-->
+					<!--<span ng-repeat="mat in matieres track by mat.id" style="font-size:12px; color:#AAA;">{{mat.name}}, </span>-->
+					<span style="font-size:12px; color:#AAA;">${opticien.montures}</span>
+					
+					<div class="opt_info_resistance" ng-show="id_matiere!=-1">
+						<table>
+							<tr>
+								<td><img src="assets/img/face/ampoule.png" style="width:35px"/></td>
+								<td>{{matieres[id_matiere].description}}</td>
+							</tr>
+						</table>
+					</div>
+
+					<div ng-show="id_matiere!=-1" style="color: #AAA; margin-top:15px; font-size: 12px;">
+						{{matieres[id_matiere].marques}}
+					</div>
+
+					
+					<div class="optic_tit_cat" style="margin-top:30px">Verres</div>
+					<div class="nSubText" style="color:#AAA">${opticien.verres}</div>
+
+					
+					<div class="optic_tit_cat" style="margin-top:30px">Lentilles</div>
+					
+					<span style="font-size:12px; color:#AAA;">${opticien.lentilles}</span>
+
+					<!-- V2
+					<div class="carousel carousel-3">
+						<div>
+							<ul>
+								<li><img src="assets/img/optic/acuvue.png" style="margin-top: 8px; width: 80%;"/></li>
+								<li><img src="assets/img/optic/freshlook.png" style="margin-top: 0px;"/></li>
+								<li><img src="assets/img/optic/dailies.png" style="margin-top: 28px;"/></li>
+							</ul>
+						</div>
+					</div>-->
+					
+					<!--
+					<div class="optic_tit_cat" style="margin-top:30px">Produits d'entretien</div>
+					<div class="carousel carousel-4">
+						<div>
+							<ul>
+								<li><img src="assets/img/optic/optifree.png" style="width: 100%;"/></li>
+								<li><img src="assets/img/optic/ophtalmic.png" style="margin-top: 30px; width: 90%;"/></li>
+							</ul>
+						</div>
+					</div>-->
+					
+					<!-- -->
+
+					<img src="assets/img/nopub.png" real-src=${opticien.encart2} ng-show="optic.encart2" style="width:100%; margin-top:20px; border-radius: 10px;"/>
+
+					<!-- -->
+					
+
+					<div class="optic_tit_cat">LES ENGAGEMENTS</div>
+					<div class="nSubText" style="font-size:10px">• ECO RESPONSABLE</div>
+
+					<table class="tab17">
+						<tr>
+							<td ng-if="optic.is_circuitcourt">
+								<a href="/engagements/">
+									<div>
+										<span>Circuit court</span>
+										<img src="assets/img/howto/circuit_court.png" style="margin-top:3px"/>
+									</div>
+								</a>
+							</td>
+							<td ng-if="optic.is_madeinfrance">
+								<a href="/engagements/">
+									<div>
+										<span>Made in France</span>
+										<img src="assets/img/howto/mif_lunettes.png" style="margin-top:20px"/>
+									</div>
+								</a>
+							</td>
+							<td ng-if="optic.is_recyclage">
+								<a href="/engagements/">
+									<div>
+										<span>Recyclage</span>
+										<img src="assets/img/howto/recyclage.png" style="margin-top:5px"/>
+									</div>
+								</a>
+							</td>
+						</tr>
+					</table>
+
+					<div class="nSubText" style="font-size:10px">• ACTIONS SOLIDAIRES = 1€ POUR UNE PAIRE DE LUNETTES</div>
+
+					<div style="color:#AAA; font-size:10px; margin-bottom:35px;">
+						Relais collecte dons. (Dons reversés aux associations partenaires)
+					</div>
+
+					<table class="tab15">
+						<tr>
+							<td>
+								<div class="sheet-open" data-sheet=".my-sheet-swipe-to-close" ng-click="SetArticle(2)">
+									<span>Maladies rares de la vision.</span>
+									<img src="assets/img/howto/maladies_de_la_vision.png"/>
+								</div>
+							</td>
+							<td>
+								<div>
+									<span>Protection de l’enfance.</span>
+									<img src="assets/img/howto/protecenfance.png" class="sheet-open" data-sheet=".my-sheet-swipe-to-close" ng-click="SetArticle(1)"/>
+								</div>
+							</td>
+							<td class="sheet-open" data-sheet=".my-sheet-swipe-to-close" ng-click="SetArticle(4)">
+								<div>
+									<span>Lutte contre le cancer</span>
+									<img src="assets/img/howto/luttecancer.jpg" style="width: 70%;"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+					
+				</div>
+
+			</div>
+
+			
+			<div class="opticien_gray_area" style="height:130px;">
+
+				<div class="optic_tit_cat" style="padding: 15px;">GARANTIES & SAV*</div>
+				<div style="padding: 0 20px 0 20px;">
+					<div class="nSubText">{{opticien_garanties_sav}}</div>
+				</div>
+				<div class="garant_car">
+					<div>
+						<ul>
+							<li class="lncs" ng-class="{'active': iActive=='lncs'}" ng-click="setPayM('lncs')"><div>Lunettes cassées</div></li>
+							<li class="muti" ng-class="{'active': iActive=='mutu'}" ng-click="setPayM('mutu')"><div>Mutuelle</div></li>
+							<li class="cart" ng-class="{'active': iActive=='3xca'}" ng-click="setPayM('3xca')"><div>x3 sans frais</div></li>
+							<li class="paye" ng-class="{'active': iActive=='3xck'}" ng-click="setPayM('3xck')"><div>x3 sans frais</div></li>
+							<!--<li class="gara" ng-class="{'active': iActive=='gara'}" ng-click="setPayM('gara')"><div>Garantie</div></li>-->
+							<li class="entr" ng-class="{'active': iActive=='entr'}" ng-click="setPayM('entr')"><div>Entretien</div></li>
+						</ul>
+					</div>
+				</div>
+				
+				<button class="col button button-small button-round button-fill openaftersale" ng-show="iActive=='lncs'" ng-click="GoAfterSale()">Ouvrir l'après vente</button>
+				
+				<div style="padding: 30px 20px 0 20px;">
+
+					<div class="nSubText gray" ng-show="iActive=='mutu'">Apicil, April, Henner, Harmonie...</div>
+					<div class="nSubText gray" ng-show="iActive=='mutu'">Réseaux santé : Viamedis, Itelis, Korélio, Santéclair</div>
+					
+					<div class="nSubText">* Voir conditions en magasin</div>
+				</div>
+
+				<div style="padding: 20px;">
+					<a href="#">
+						<button class="col button button-raised button-fill" ng-click="SetOpticien()" style="border-radius:12px">Prendre rendez-vous</button>
+					</a>
+				</div>
+
+			</div>
+			
+		</div>
+	</div>
+</template>
+
+<script>
+	export default function (props, { $f7, $on, $update }) {
+		// Component Data
+		//var self = this;
+		//let name = "Jimmy";
+		//let age = 25;
+		//let likes = ["Tennis", "Chess", "Football"];
+		var id = props.id;
+		var opticien = {name:""};
+
+		const like = () => {
+			supe.from('favoris')
+			.insert({ 
+				"user": global.user.id, 
+				"opticien": id
+			})
+			.then(function(e) {
+				meLike(true);
+			})
+			.catch(function(e) { console.warn(e) })
+		};
+		const unlike = () => {
+			supe.from('favoris')
+			.delete()
+			.eq('user', global.user.id)
+			.eq('opticien', id)
+			.then(function(e) {
+				meLike(false);
+			})
+			.catch(function(e) { console.warn(e) })
+		};
+
+		// Component Methods
+		const openAlert = () => {
+			$f7.dialog.alert("Hello World");
+		};
+		
+		const addValue = () => {
+			debugger;
+			$update();
+		};
+
+		const liked = () => {
+			supe.from('favoris')
+			.select("id")
+			.eq('opticien', id)
+			.then((response) => {
+				console.log(response);
+				if (response.data.length > 0) meLike(true);
+				else meLike(false);
+			})
+			.catch((err) => {
+				console.warn(err);
+				meLike(false);
+			});
+		};
+
+		const meLike = function(status) {
+			if (status) {
+				$$("#ilike").show();
+				$$("#idontlike").hide();
+			}
+			else {
+				$$("#ilike").hide();
+				$$("#idontlike").show();
+			}
+		};
+
+		// Page Events
+		$on("pageMounted", (e, page) => {
+			console.log("pageMounted", page);
+		});
+		$on("pageInit", (e, page) => {
+			var self = this;
+			console.log("pageInit", page);
+			MyApp.fw7.app.preloader.show();
+			supe.from('Opticien')
+			.select(`id, name, adresse, email, telephone, image, website, stars, Ville, CodePostal, description, encart1, encart2, horaires, ouverture, is_verifvue, is_downtown, is_mall, is_handicap, is_lens, is_home, is_circuitcourt, is_madeinfrance, is_recyclage, montures, verres, lentilles)`)
+			.eq('id', id)
+			.then((response) => {
+				console.log(response);
+				MyApp.fw7.app.preloader.hide();
+				opticien = response.data[0];
+				//opticien.distance = global.hasOwnProperty(optic_distance) ? global.optic_distance : null;
+				if (opticien.image == null ||
+					opticien.image == "") {
+					opticien.image = "assets/img/no.png"
+				}
+				$update();
+				liked();
+				MyApp.fw7.app.emit("opticien", opticien);
+			}).catch((error)=> {
+				MyApp.fw7.app.preloader.hide();
+				console.warn(error);
+			});
+		});
+		$on("pageBeforeIn", (e, page) => {
+			console.log("pageBeforeIn", page);
+		});
+		$on("pageAfterIn", (e, page) => {
+			console.log("pageAfterIn", page);
+		});
+		$on("pageBeforeOut", (e, page) => {
+			console.log("pageBeforeOut", page);
+		});
+		$on("pageAfterOut", (e, page) => {
+			console.log("pageAfterOut", page);
+		});
+		$on("pageBeforeRemove", (e, page) => {
+			console.log("pageBeforeRemove", page);
+		});
+
+
+		// Return render function
+		return $render;
+	}
+</script>

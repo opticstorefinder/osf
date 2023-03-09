@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.opticstorefinder.osf" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Optic Store Finder</name>
+    <description>Optic Store Finder mobile application</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Gilles Bandza @OpticStoreFinder
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+	
+    <allow-navigation href="*" />
+
+    <platform name="android">
+      <preference name="StatusBarOverlaysWebView" value="false" />
+      <preference name="android-minSdkVersion" value="22" />
+      <framework src="com.android.support:support-v4:+" />
+      <icon density="ldpi" src="res/icon/android/mipmap-ldpi/ic_launcher.png" />
+      <icon density="mdpi" src="res/icon/android/mipmap-mdpi/ic_launcher.png" />
+      <icon density="hdpi" src="res/icon/android/mipmap-hdpi/ic_launcher.png" />
+      <icon density="xhdpi" src="res/icon/android/mipmap-xhdpi/ic_launcher.png" />
+      <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/ic_launcher.png" />
+      <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/ic_launcher.png" />
+      <resource-file src="google-services.json" target="/app/google-services.json" />
+      <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+      </feature>
+    </platform>
+
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="Suppresses3DTouchGesture" value="true" />
+    <preference name="Allow3DTouchLinkPreview" value="false" />
+    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <preference name="AllowInlineMediaPlayback" value="true" />
+    <preference name="SplashScreenDelay" value="10000" />
+    <!--<preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/splashscreen.xml" />-->
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/logo.png" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#1A3D87" />
+</widget>

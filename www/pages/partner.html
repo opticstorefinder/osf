@@ -1,0 +1,85 @@
+<div class="page partner" data-name="becomepartner" ng-controller="PartnerController" ng-init="init()">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+					<i class="icon icon-back"></i>
+					<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title">Devenir partenaire</div>
+			<!--<div class="right">
+				<a href="#" class="link" ng-click="init()">
+					<div class="f7-icons">eyeglasses</div>
+				</a>
+			</div>-->
+		</div>
+	</div>
+	<div class="page-content">
+        <div style="padding-left: 15px; padding-right: 15px; background-color: #F2F2F2; padding-bottom: 80px;">
+			&nbsp;
+            <div class="op_text_circle">
+                <div class="title">Partenaire</div>
+                <div class="content" ng-show="clientstatus=='client'">
+                    Vous êtes un opticien-lunetier, vous possédez un établissement spécialisé dans la correction de la vue, lunettes et lentilles.<br>
+					Vous souhaitez figurer au catalogue de <b>&laquo;Optic Store Finder&raquo;</b>, contactez-nous.
+                </div>
+                <div class="content" ng-show="clientstatus=='parter_to_be'">
+                    Nous avons reçu votre demande de partenariat. Celle-ci est à l'étude.<br> 
+					Nous reviendrons vers vous rapidement. Merci pour votre confiance
+                </div>
+                <div class="content" ng-show="clientstatus=='parter'">
+                    Merci de compter parmi nos partenaires distingué. Pour accéder à l'espace personnelle de votre établissement, merci de suivre le lien approprié.
+                </div>
+            </div>
+        </div>
+
+        <div class="above_list_optk" ng-show="clientstatus=='client'">
+			
+            <form class="list" id="my-form" style="margin-top: 0px; margin-bottom: 15px; text-transform: none;">
+                <div style="margin:15px 15px 0 10px">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Numéro SIREN / SIRET</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="siren" placeholder="SIREN / SIRET" ng-model="siren"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Nom de l'établissement</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="companyname" placeholder="Nom" ng-model="name" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Adresse</div>
+                                    <div class="item-input-wrap">
+										<textarea class="resizable" style="min-height:82px" ng-model="address"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div ng-show="showsubmit" class="block block-strong row no-after no-before" style="margin: 15px 0 0 0 !important; padding-top: 0 !important; padding-bottom: 0 !important;">
+                        <div class="col"><a class="button button-fill button-round" href="#" ng-click="becomepartner()">Soumettre la demande</a></div>
+                    </div>
+                    
+                </div>
+            </form>
+
+        </div>
+        
+	</div>
+</div>

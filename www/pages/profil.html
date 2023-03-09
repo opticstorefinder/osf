@@ -1,0 +1,144 @@
+<div class="page" data-name="profile" ng-controller="ProfileController" ng-init="init()">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+					<i class="icon icon-back"></i>
+					<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title">Mon profil</div>
+			<div class="right">
+				<a href="#" class="link" ng-click="UpdatePassword()">
+					<div class="f7-icons">lock</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="page-content">
+        <div style="padding-left: 15px; padding-right: 15px; background-color: #F2F2F2; padding-bottom: 80px;">
+            &nbsp;
+            <div class="op_text_circle">
+                <div class="title" ng-click="tobbi()">Mes informations</div>
+                <div class="content">
+                    {{monprofil_intro}}
+                </div>
+            </div>
+        </div>
+
+        <div class="above_list_optk">
+
+            <form class="list" id="my-form" style="margin-top: 0px; margin-bottom: 15px; text-transform: none;">
+                <div style="margin:15px 15px 0 10px">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Identifiant</div>
+                                    <div class="item-input-wrap">
+                                        <input type="email" name="email" placeholder="Votre adresse email" ng-model="user.email" readonly disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Nom complet</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="fullname" placeholder="Nom complet" ng-model="user.user_metadata.full_name" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Téléphone</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="telephone" placeholder="Téléphone" ng-model="user.user_metadata.telephone" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Date de naissance</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" placeholder="Date de naissance" readonly="readonly" id="calendar-input" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Genre</div>
+                                <div class="item-input-wrap input-dropdown-wrap">
+                                    <select placeholder="Veuillez choisir" ng-model="user.user_metadata.Sexe" ng-change="SetSexe(user.user_metadata.Sexe)">
+                                        <option value="-">- Choisir une valeur</option>
+                                        <option value="Masculin">Masculin</option>
+                                        <option value="Feminin">Feminin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Région</div>
+                                <div class="item-input-wrap input-dropdown-wrap">
+                                    <select placeholder="Veuillez choisir" ng-model="user.user_metadata.Region">
+                                        <option value="-">- Choisir une valeur</option>
+                                        <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+                                        <option value="Bourgogne-Franche-Comté">Bourgogne-Franche-Comté</option>
+                                        <option value="Bretagne">Bretagne</option>
+                                        <option value="Centre-Val de Loire">Centre-Val de Loire</option>
+                                        <option value="Grand Est">Grand Est</option>
+                                        <option value="Hauts-de-France">Hauts-de-France</option>
+                                        <option value="Île-de-France">Île-de-France</option>
+                                        <option value="Normandie">Normandie</option>
+                                        <option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
+                                        <option value="Occitanie">Occitanie</option>
+                                        <option value="Pays de la Loire">Pays de la Loire</option>
+                                        <option value="Provence-Alpes-Côte d'Azur">Provence-Alpes-Côte d'Azur</option>
+                                        <option value="Corse">Corse</option>
+                                        <option value="DOM-TOM">DOM-TOM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li><!--
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Ville</div>
+                                <div class="item-input-wrap input-dropdown-wrap">
+                                    <select placeholder="Veuillez choisir" ng-model="user.user_metadata.Ville">
+                                        <option value="-">- Choisir une valeur</option>
+                                        <option value="Paris">Paris</option>
+                                        <option value="Lyon">Lyon</option>
+                                        <option value="Marseille">Marseille</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>-->
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Ville</div>
+                                <div class="item-input-wrap">
+                                    <input id="autocomplete-dropdown-placeholder" type="text" placeholder="Ville" ng-model="user.user_metadata.Ville" />
+                                </div>
+                            </div>
+                        </li>                        
+                    </ul>
+
+                    <div class="block block-strong row no-after no-before" style="margin: 15px 0 0 0 !important; padding-top: 0 !important; padding-bottom: 0 !important;">
+                        <div class="col"><a class="button button-fill button-round" id="loginbtn" href="#" ng-click="UpdateProfile()">Mettre à jour</a></div>
+                    </div>
+                    
+                </div>
+            </form>
+
+        </div>
+        
+	</div>
+</div>

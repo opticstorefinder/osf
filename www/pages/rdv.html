@@ -1,0 +1,94 @@
+<div class="page" data-name="rendezvous" ng-controller="RendezvousController" ng-init="init()">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+					<i class="icon icon-back"></i>
+					<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title RdvTitle">
+				Prenez rendez-vous
+				<div>{{opticien.name}}</div>
+			</div>
+			<div class="right">
+				<div class="preloader color-white reeval hidden"></div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="page-content">
+
+		<div class="rdv_title" ng-show="state=='motif'">Sélectionnez un motif</div>
+		<div class="rdv_title" ng-show="state=='cdate'">Choisissez la date {{$scope.calendaritems.length}}-{{cdi.slots.length}}</div>
+
+		<div ng-show="state=='motif'" style="padding: 20px 30px">
+
+			<ul class="list_of_motifs">
+				<li ng-repeat="pr in prestations" ng-click="switchState(pr)" class="{{pr.class}}">{{pr.name}}<div>{{pr.subtext}}</div></li>
+			</ul>
+
+		</div>
+
+		<div ng-show="state=='cdate'">
+
+			<div class="rdv_ctr_cal">
+				<div class="cal1" ng-repeat="cdi in calendaritems" ng-show="cdi.slots.length>0">
+					<div class="creneau_date" ng-click="ShowSlots(cdi)">
+						{{getDate(cdi.date, 'day')}} {{getDate(cdi.date, 'date')}} {{getDate(cdi.date, 'month')}}
+					</div>
+					<div class="creneaux" ng-show="cdi.showslots">
+						<ul>
+							<li ng-repeat="slot in cdi.slots | orderBy : 'view'">
+								<div ng-click="ChooseSlot(cdi, slot)" ng-class="{'active': slot.active==true}">{{slot.view}}</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="oth_creneaux">
+					D'autres créneaux seront ajoutés au fur et à mesure
+				</div>
+			</div>
+
+		</div>
+
+		<div ng-show="state=='recap'">
+
+			<div class="ct_recap">
+
+				<div class="f7-icons" style="float: right; font-size: 16px; cursor:pointer;" ng-click="state='cdate'"">xmark</div>
+
+				<div class="recap_title">Informations importantes</div>
+				<div class="recap_message">N’oubliez pas d’apporter les pièces suivantes au rendez - vous :</div>
+
+				<table>
+					<tr>
+						<td><img src="assets/img/home/check.png" style="width: 20px;"/></td>
+						<td style="padding: 10px;">Une ordonnance valable</td>
+					</tr>
+					<tr>
+						<td><img src="assets/img/home/check.png" style="width: 20px;"/></td>
+						<td style="padding: 10px;">Votre carte vitable</td>
+					</tr>
+					<tr>
+						<td><img src="assets/img/home/check.png" style="width: 20px;"/></td>
+						<td style="padding: 10px;">Votre mutuelle</td>
+					</tr>
+				</table>
+
+				<div class="recap_submessage">
+					En confirmant ce rendez-vous, vous vous engagez à l’honorer. <br>
+					En cas d’imprévu, pensez à l’annuler
+				</div>
+
+				<div style="padding: 0; margin-top:20px;">
+					<button class="col button button-raised button-fill button-round" style="text-transform: none;" ng-click="confirm()">Confirmer le rendez-vous</button>
+				</div>
+	
+			</div>
+
+		</div>
+
+	</div>
+</div>

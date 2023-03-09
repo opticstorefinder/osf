@@ -1,0 +1,98 @@
+<div class="page opticiens" data-name="opticiens" ng-controller="OpticiensController" ng-init="init()">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+					<i class="icon icon-back"></i>
+					<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title">Trouver mon opticien</div>
+			<div class="right">
+                <div class="preloader color-white loading-results hidden"></div>
+				<a href="#" class="link" ng-click="init()">
+					<div class="f7-icons">arrow_counterclockwise</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="page-content">
+
+        <div style="padding-left: 15px; padding-right: 15px; margin-top: -15px; padding-top: 15px;background-color:#F2F2F2; padding-bottom: 80px;">
+            
+            <div class="searchwidget" ng-show="filter">
+                <input type="text" placeholder="Recherche ..." style="position: absolute; margin: 10px 0 0 10px; color: #FFF;"/>
+                <div class="f7-icons" ng-click="filter=!filter" style="color:#FFF; margin-top:4px; margin-left:calc(100% - 32px); cursor:pointer;">multiply_circle</div>
+            </div>
+
+            <div class="f7-icons place_icon" ng-click="filter=!filter">placemark</div>
+            <div class="searchpro2" ng-click="filter=!filter" ng-show="filter"><i class="f7-icons">xmark</i></div>
+            <div class="searchpro2" ng-click="filter=!filter" ng-show="!filter"><i class="f7-icons">search</i></div>
+            <div class="localizeBtn" ng-click="localize()">
+                <button class="col button button-raised button-fill button-round">
+                    <span ng-if="!position">Localiser ma position</span>
+                    <span ng-if="position">A proximité</span>
+                </button>
+            </div>
+            
+            <form class="list" id="search-form" style="margin-top:10px; margin-bottom:0;" ng-show="filter">
+                <div id="login_form">
+                    <ul style="background-color:transparent;">
+                        <li class="item-content item-input" style="padding: 0;">
+                            <div class="item-inner" style="padding-right: 0; padding-bottom: 0 !important">
+                                <div class="item-input-wrap">
+                                    <input type="text" placeholder="Votre recherche ..." ng-model="search" ng-keyup="SearchOpText()" style="background-color:#FFF; text-indent:10px; border-radius: 10px;" />
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+
+            <div class="op_text_circle" ng-show="!filter">
+                <div class="title">DECOUVREZ</div>
+                <div class="content">{{opticiens_discover}}</div>
+            </div>
+        </div>
+
+        <div class="above_list_optk on_list">
+
+            <div class="list media-list inset">
+                <div class="preloader" ng-show="optics.length<=0"></div>
+                <ul ng-show="optics.length>0">
+                    <li ng-repeat="optic in optics | filter:search" ng-click="setDistance(optic.distance)">
+                        <div class="f7-icons fleche_bas">arrow_right_circle_fill</div>
+                        <div class="optic_distance" ng-show="position">{{optic.distance}}</div>
+                        <a href="/opticien/{{optic.id}}/" class="item-link item-content">
+                            <div class="item-media">
+                                <!--<img ng-src="{{optic.image || 'assets/img/no.png'}}" width="48" style="border-radius: 5px;" />-->
+                                <img src="assets/img/no.png" real-src="{{optic.image}}" width="48" style="border-radius: 5px;" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title-row" style="margin-top: -6px; font-size:13px;">
+                                    <div class="item-title">{{optic.name}}</div>
+                                </div>
+                                <div class="item-subtitle" style="font-size:12px;">{{optic.Ville}}</div>
+                                <div class="item-subtitle of-stars">
+                                    <div class="f7-icons star" ng-class="{'shine': optic.stars>=1}">star_fill</div>
+                                    <div class="f7-icons star" ng-class="{'shine': optic.stars>=2}">star_fill</div>
+                                    <div class="f7-icons star" ng-class="{'shine': optic.stars>=3}">star_fill</div>
+                                    <div class="f7-icons star" ng-class="{'shine': optic.stars>=4}">star_fill</div>
+                                    <div class="f7-icons star" ng-class="{'shine': optic.stars>=5}">star_fill</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="loadMore" ng-click="loadMore()" ng-show="optics.length > 0">
+                <button class="button button-raised button-fill button-round button-small">Charger plus ...</button>
+            </div>
+    
+        </div>
+
+	</div>
+</div>

@@ -1,0 +1,55 @@
+<div class="page essayage" data-name="essayages" ng-controller="EssayagesController" ng-init="init()">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+					<i class="icon icon-back"></i>
+					<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title">Mes essayages</div>
+			<div class="right">
+				<a href="#" class="link" ng-click="getfile()">
+					<div class="f7-icons">plus_circle</div>
+				</a>
+			</div>
+		</div>
+		<div style="height: 0;"><input type="file" id="file" accept="image/*"/></div>
+	</div>
+
+	<div class="zoomed_in ng-hide" ng-show="zoomed">
+		<div class="close" ng-click="zoomed=false">Fermer</div>
+		<div class="delete" ng-click="DeleteEssayage()">Supprimer</div>
+	</div>
+
+	<div class="page-content">
+        <div style="padding-left: 15px; padding-right: 15px; background-color: #F2F2F2; padding-bottom: 80px;">
+            &nbsp;
+            <div class="op_text_circle">
+                <div class="title">Mes essayages</div>
+                <div class="content">
+                    {{essayages_intro}}
+                </div>
+            </div>
+        </div>
+
+        <div class="above_list_optk" style="box-shadow:0px -6px 7px -3px rgb(0 0 0 / 8%)">
+			
+            <form class="list" style="margin-top: 0px; margin-bottom: 15px; text-transform: none;">
+                <div style="margin:20px 0 0 0">
+
+					<ul class="essayage_list">
+						<li ng-repeat="essayage in essayages">
+							<div ng-style="{'background-image': 'url(' + essayage.image + ')'}" ng-click="zoomin(essayage)">
+								<div class="f7-icons">zoom_in</div>
+							</div>
+						</li>
+					</ul>
+
+                </div>
+            </form>
+
+        </div>
+	</div>
+</div>

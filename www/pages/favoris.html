@@ -1,0 +1,48 @@
+<div class="page" data-name="favorites" ng-controller="FavorisController" ng-init="init()">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+					<i class="icon icon-back"></i>
+					<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title">Mes favoris</div>
+			<div class="right">
+				<a href="#" class="link" ng-click="init()">
+					<div class="f7-icons">arrow_counterclockwise</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="page-content favorites">
+        
+        <div class="list media-list inset" style="margin:0 10px 0 0;">
+            <ul ng-show="optics.length>0">
+                <li ng-repeat="optic in optics">
+                    <div class="f7-icons fleche_bas">arrow_right_circle_fill</div>
+                    <!--<div class="optic_distance">2 km</div>-->
+                    <div class="optic_distance" ng-show="position">{{optic.distance}}</div>
+                    <a href="/opticien/{{optic.Opticien.id}}/" class="item-link item-content">
+                        <div class="item-media"><img ng-src="{{optic.Opticien.image || 'assets/img/no.png'}}" width="48" style="border-radius: 5px;" /></div>
+                        <div class="item-inner">
+                            <div class="item-title-row" style="margin-top: -6px; font-size:13px;">
+                                <div class="item-title">{{optic.Opticien.name}}</div>
+                            </div>
+                            <div class="item-subtitle" style="font-size:12px; color:#CCC;">{{optic.Opticien.Ville}}</div>
+                            <div class="item-subtitle of-stars">
+                                <div class="f7-icons star" ng-class="{'shine': optic.Opticien.stars>=1}">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'shine': optic.Opticien.stars>=2}">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'shine': optic.Opticien.stars>=3}">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'shine': optic.Opticien.stars>=4}">star_fill</div>
+                                <div class="f7-icons star" ng-class="{'shine': optic.Opticien.stars>=5}">star_fill</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+	</div>
+</div>

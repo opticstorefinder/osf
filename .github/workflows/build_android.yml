@@ -33,6 +33,12 @@ jobs:
       - name: Install app dependencies
         run: npm install
 
+      - name: Remove directory
+        run: rm -r veggies3
+
+      - name: Clean
+        run: cordova clean android
+
       - name: Add Android platform
         run: cordova platform add android@latest
 

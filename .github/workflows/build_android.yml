@@ -34,7 +34,10 @@ jobs:
         run: npm install
 
       - name: Remove directory
-        run: rm -r platforms
+        run: rm -rf platforms
+
+      - name: Remove directory 1
+        run: rm -rf /platforms
 
       - name: Clean
         run: cordova clean android

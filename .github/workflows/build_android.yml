@@ -56,9 +56,9 @@ jobs:
       - name: Build Android Dev APK
         run: cordova build android --debug
 
-      - name: Generate the Android App Bundle
-        working-directory: ./platforms/android/
-        run: ./gradlew bundle
+      #- name: Generate the Android App Bundle
+      #  working-directory: ./platforms/android/
+      #  run: ./gradlew bundle
 
       - name: Upload dev APK
         uses: actions/upload-artifact@v1

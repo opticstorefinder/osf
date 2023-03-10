@@ -2748,7 +2748,25 @@ button[disabled] {
     margin-right: 12px;
 }
 
-
+.placeholder4text {
+    height: 20px;
+    background-color: #CCC;
+}
+.placeholder4text.l40 {
+    width:40%;
+}
+.placeholder4text.l60 {
+    width:60%;
+}
+.placeholder4text.l80 {
+    width:80%;
+}
+.placeholder4text.l100 {
+    width:100%;
+}
+.opticien_blue_area .placeholder4text {
+    background-color: #3540cf;
+}
 
 
 

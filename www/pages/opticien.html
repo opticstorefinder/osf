@@ -29,17 +29,23 @@
 				<div class="row no-gap" style="padding-top:20px">
 					<div class="col-40 imgr"><img src="assets/img/no.png" real-src=${opticien.image}/></div>
 					<div class="col-60 contr">
+						<div class="placeholder4text l80"></div>
 						<div class="optic_title">${opticien.name}</div>
 						<table cellspacing="0" cellpadding="0">
 							<tr>
 								<td rowspan="2"><div><img src="assets/img/optic/horaires.png"/></div></td>
-								<td>${opticien.ouverture}</td>
+								<td>${opticien.ouverture}<div class="placeholder4text"></div></td>
 							</tr>
 							<tr>
 								<td>${opticien.horaires}</td>
 							</tr>
 						</table>
-						<div class="opt_adr">${opticien.adresse}, ${opticien.CodePostal}, ${opticien.Ville}</div>
+						<div class="opt_adr">
+							${opticien.adresse} <span ng-show="optic.adresse && optic.CodePostal">,</span> 
+							${opticien.CodePostal} <span ng-show="optic.CodePostal && optic.Ville">,</span> 
+							${opticien.Ville}
+							<div class="placeholder4text l40"></div>
+						</div>
 						<div class="opt_web" ng-click="OpenExternalLink()">${opticien.website}</div>
 					</div>
 				</div>
@@ -82,6 +88,8 @@
 					
 					<div class="optic_tit_cat">Montures</div>
 					
+					<div class="placeholder4text"></div>
+
 					<!-- V2
 					<div class="nSubText">Selectionnez un materiau et découvrez tous ses avantages *</div>
 
@@ -110,10 +118,15 @@
 
 					
 					<div class="optic_tit_cat" style="margin-top:30px">Verres</div>
+					
+					<div class="placeholder4text l40"></div>
+					
 					<div class="nSubText" style="color:#AAA">${opticien.verres}</div>
 
 					
 					<div class="optic_tit_cat" style="margin-top:30px">Lentilles</div>
+					
+					<div class="placeholder4text l80"></div>
 					
 					<span style="font-size:12px; color:#AAA;">${opticien.lentilles}</span>
 
@@ -148,6 +161,8 @@
 
 					<div class="optic_tit_cat">LES ENGAGEMENTS</div>
 					<div class="nSubText" style="font-size:10px">• ECO RESPONSABLE</div>
+					
+					<div class="placeholder4text l60"></div>
 
 					<table class="tab17">
 						<tr>
@@ -299,6 +314,7 @@
 			supe.from('favoris')
 			.select("id")
 			.eq('opticien', id)
+			.eq('user', global.user.id)
 			.then((response) => {
 				console.log(response);
 				if (response.data.length > 0) meLike(true);
@@ -336,11 +352,13 @@
 				console.log(response);
 				MyApp.fw7.app.preloader.hide();
 				opticien = response.data[0];
+				//opticien = { id: "", name: "", adresse: "", email: "", telephone: "", image: "", website: "", stars: "", Ville: "", CodePostal: "", description: "", encart1: "", encart2: "", horaires: "", ouverture: "", is_verifvue: "", is_downtown: "", is_mall: "", is_handicap: "", is_lens: "", is_home: "", is_circuitcourt: "", is_madeinfrance: "", is_recyclage: "", montures: "", verres: "", lentilles: "" };
 				//opticien.distance = global.hasOwnProperty(optic_distance) ? global.optic_distance : null;
 				if (opticien.image == null ||
 					opticien.image == "") {
 					opticien.image = "assets/img/no.png"
 				}
+				$$(".placeholder4text").hide();
 				$update();
 				liked();
 				MyApp.fw7.app.emit("opticien", opticien);

@@ -212,9 +212,12 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
         self.sync();
         if (global.hasOwnProperty('active_tab')) {
             $scope.menu_item = global.active_tab;
-            if ($scope.menu_item) {
+            if ($scope.menu_item == "rdv") {
                 $scope.rdvs = [];
                 self.getRdv();
+            }
+            else if ($scope.menu_item == "vsg") {
+                $scope.setTab($scope.menu_item);
             }
         }
 		else $scope.menu_item = 'home';
@@ -1078,6 +1081,10 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
                 $(".pic_area").css("background-image", "url('" + choices.image + "')");
                 /**/
                 setTimeout(() => {
+                    if (!self.swiper) {
+                        self = self ? self : {};
+                        self.swiper = global.swiper ? global.swiper : MyApp.fw7.app.swiper.get('.swiper-forms');
+                    }
                     self.swiper.update();
                     let found = false;
                     while (!found) {

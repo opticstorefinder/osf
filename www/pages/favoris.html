@@ -25,7 +25,7 @@
                     <!--<div class="optic_distance">2 km</div>-->
                     <div class="optic_distance" ng-show="position">{{optic.distance}}</div>
                     <a href="/opticien/{{optic.Opticien.id}}/" class="item-link item-content">
-                        <div class="item-media"><img ng-src="{{optic.Opticien.image || 'assets/img/no.png'}}" width="48" style="border-radius: 5px;" /></div>
+                        <div class="item-media"><img src="assets/img/no.png" real-src="{{optic.Opticien.image}}" width="48" style="border-radius: 5px;" /></div>
                         <div class="item-inner">
                             <div class="item-title-row" style="margin-top: -6px; font-size:13px;">
                                 <div class="item-title">{{optic.Opticien.name}}</div>

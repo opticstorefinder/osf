@@ -73,7 +73,7 @@ MyApp.angular.controller('PartnerController', ['$scope', '$rootScope', 'InitServ
         .update(data)
         .eq('id', global.user.id)
         .then((response) => {
-            self.toast('Nous avons bien reçu votre demande');
+            self.toast('Nous avons bien reçu votre demande. Nous vous contacterons dans 48h');
 
         }).catch((error) => {
             console.warn(error);

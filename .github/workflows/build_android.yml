@@ -33,14 +33,14 @@ jobs:
       - name: Install app dependencies
         run: npm install
 
-      - name: Remove directory
-        run: rm -rf platforms
+      #- name: Remove directory
+      #  run: rm -rf platforms
 
-      - name: Remove directory 1
-        run: rm -rf /platforms
+      #- name: Remove directory 1
+      #  run: rm -rf /platforms
 
-      - name: Clean
-        run: cordova clean android
+      #- name: Clean
+      #  run: cordova clean android
 
       - name: Add Android platform
         run: cordova platform add android@latest

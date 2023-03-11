@@ -78,17 +78,26 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
             androidTheme: window.plugins.actionsheet.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT, // default is THEME_TRADITIONAL
             title: "Ajouter la photo de votre essayage ?",
             subtitle: "Choisir la source", // supported on iOS only
-            buttonLabels: ["Bibliothèque", "Nouvelle photo"],
+            buttonLabels: ["Galerie de photos", "Nouvelle photo"],
             androidEnableCancelButton: true, // default false
             winphoneEnableCancelButton: true, // default false
             addCancelButtonWithLabel: "Annuler",
-            //addDestructiveButtonWithLabel: "Delete it",
             position: [20, 40], // for iPad pass in the [x, y] position of the popover
-            destructiveButtonLast: true, // you can choose where the destructive button is shown
+            destructiveButtonLast: true // you can choose where the destructive button is shown
         };
         // Depending on the buttonIndex, you can now call
         window.plugins.actionsheet.show(options, function(buttonIndex) {
-            alert("index : " + buttonIndex);
+            //alert("index : " + buttonIndex);
+            switch(buttonIndex) {
+                case 1: // Galerie de photos
+                    self.getfile();
+                    break;
+                case 2: // Nouvelle Photo
+                    self.takePicture();
+                    break;
+                case 3: // Annuler
+                    break;
+            }
         });
     };
 
@@ -120,7 +129,45 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
             self.errorhappened();
         });
     };
-
+    
+    self.takePicture = function() {
+        navigator.camera.getPicture(self.onSuccess, self.onFail, { 
+            quality: 100,
+            allowEdit: false, 
+            correctOrientation: true,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            encodingType: Camera.EncodingType.JPEG,
+            destinationType: Camera.DestinationType.DATA_URL,
+            targetWidth: 500,
+            targetHeight: 500
+        });
+    };
+    
+    self.onSuccess = function(imageData) {
+        var image = new Image();
+        image.src = 'data:image/png;base64,' + imageData; // jpg ?
+        //$(".pic_area").css("background-image", "url('" + image.src + "')");
+        document.getElementById('essayageImg').src = "data:image/jpeg;base64," + imageData;
+        self.AfterImageReceived();
+        /*********************/
+        supe.storage.from("essayages").upload("toto.png", image)
+        .then((response) => {
+            if (!response.error) {
+                let url = supe.storageUrl + "/object/public/essayages/" + response.data.path;
+                alert(url);
+                //if (success) success(url);
+            }
+            else console.warn(response);
+        }).catch((err) => {
+            //elem.removeEventListener("change", self.onimage , false);
+            //self.errorhappened();
+        });
+    };
+    
+    self.onFail = function(message) {
+        alert('Failed because: ' + message);
+    };
+    
     self.CreateEssayage = function(url) {
         supe.from('users_essayage').insert([
             { "user_id": global.user.id, "image": url }

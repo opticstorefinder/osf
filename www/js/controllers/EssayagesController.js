@@ -149,7 +149,7 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         //$(".pic_area").css("background-image", "url('" + image.src + "')");
         document.getElementById('essayageImg').src = "data:image/jpeg;base64," + imageData;
         /*********************/
-        supe.storage.from("essayages").upload("toto.png", image)
+        supe.storage.from("essayages").upload("toto.png", imageData)
         .then((response) => {
             if (!response.error) {
                 let url = supe.storageUrl + "/object/public/essayages/" + response.data.path;

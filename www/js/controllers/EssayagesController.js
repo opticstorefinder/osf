@@ -148,7 +148,6 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         image.src = 'data:image/png;base64,' + imageData; // jpg ?
         //$(".pic_area").css("background-image", "url('" + image.src + "')");
         document.getElementById('essayageImg').src = "data:image/jpeg;base64," + imageData;
-        self.AfterImageReceived();
         /*********************/
         supe.storage.from("essayages").upload("toto.png", image)
         .then((response) => {
@@ -157,8 +156,12 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
                 alert(url);
                 //if (success) success(url);
             }
-            else console.warn(response);
+            else {
+                alert(response);
+                console.warn(response);
+            }
         }).catch((err) => {
+            alert(err);
             //elem.removeEventListener("change", self.onimage , false);
             //self.errorhappened();
         });

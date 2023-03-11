@@ -1002,7 +1002,8 @@ function fallingSky(base64str, filename, type, callback) {
 		);
 	}
 	
-	window.requestFileSystem(TEMPORARY, 0, onFs, onError);
+	if (window.hasOwnProperty("requestFileSystem"))
+		window.requestFileSystem(TEMPORARY, 0, onFs, onError);
 	
 	/** General Error Catcher **/
 	function onError(err) {

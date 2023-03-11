@@ -22,6 +22,7 @@ MyApp.angular.controller('FavorisController', ['$scope', '$rootScope', 'InitServ
         
         if (!global.user || !global.user.id) {
             MyApp.fw7.app.dialog.confirm('Veuillez vous connecter pour avoir accès à cette fonctionnalité', function () {
+                GoToPage("user");
                 mainView.router.back();
             }, function () {
                 mainView.router.back();

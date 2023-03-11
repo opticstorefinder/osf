@@ -575,7 +575,10 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
                         else if (e.activeIndex == 3) self.setForms("carre");
                         else if (e.activeIndex == 4) self.setForms("triangle1");
                         else if (e.activeIndex == 5) self.setForms("triangle2");
-                        else if (e.activeIndex == 6) self.setForms("rectangle");
+                        else if (e.activeIndex == 6) {
+                            debugger;
+                            self.setForms("rectangle");
+                        }
                     }
                     else {
                         $$(".vsg_down").hide();
@@ -599,6 +602,7 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
     };
 
     self.setForms = function(form) {
+        let choices = localStorage.getItem("userChoices") ? JSON.parse(localStorage.getItem("userChoices")) : null;
         $scope.form = form;
         self.sync();
         $(".vsg_title2.1st").html($scope.table_forms[form].title);
@@ -608,6 +612,14 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
         self.swiper2.update();
         self.swiper2.slideTo(0, 0);
         self.animatedescription();
+        if (choices) {
+            if ($scope.form == choices.form) {
+                self.shapePosition = choices.position;
+            }
+            else {
+                self.shapePosition = { x: 0, y: 0, z: 0 };
+            }
+        }
     };
 
     self.animatedescription = function() {
@@ -1082,7 +1094,10 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
                 /**/
                 setTimeout(() => {
                     if (!self.swiper) {
+                        debugger;
                         self = self ? self : {};
+                        MyApp.fw7.app.preloader.hide();
+                        $$(".swiper-forms .swiper-slide").removeClass("swiper-slide-active");
                         self.swiper = global.swiper ? global.swiper : MyApp.fw7.app.swiper.get('.swiper-forms');
                     }
                     self.swiper.update();
@@ -1093,6 +1108,10 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
                             found = true;
                             MyApp.fw7.app.preloader.hide();
                             $scope.placeForm(choices.position);
+                        }
+                        if (self.swiper.realIndex == 6) {
+                            debugger;
+                            self.swiper.slideTo(0, 0);
                         }
                     }
                 }, 500);

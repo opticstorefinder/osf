@@ -11,11 +11,7 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
     $scope.user = {};
     $scope.essayages = [];
     $scope.zoomed = false;
-
-    InitService.addEventListener('ready', function () {
-        log('OpticienController: ok, DOM ready'); // DOM ready
-    });
-	
+    
 	$scope.init = function() {
         $scope.user = global.user;
         $scope.zoomed = false;
@@ -72,7 +68,31 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         });
     };
 
-    $scope.getfile = function() {
+    $scope.AddEssayage = function() {
+        window.plugins = window.hasOwnProperty("plugins") ? window.plugins : {};
+        if (!window.plugins.hasOwnProperty("actionsheet")) {
+            self.getfile();
+            return;
+        }
+        var options = {
+            androidTheme: window.plugins.actionsheet.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT, // default is THEME_TRADITIONAL
+            title: "Ajouter la photo de votre essayage ?",
+            subtitle: "Choisir la source", // supported on iOS only
+            buttonLabels: ["Bibliothèque", "Nouvelle photo"],
+            androidEnableCancelButton: true, // default false
+            winphoneEnableCancelButton: true, // default false
+            addCancelButtonWithLabel: "Annuler",
+            //addDestructiveButtonWithLabel: "Delete it",
+            position: [20, 40], // for iPad pass in the [x, y] position of the popover
+            destructiveButtonLast: true, // you can choose where the destructive button is shown
+        };
+        // Depending on the buttonIndex, you can now call
+        window.plugins.actionsheet.show(options, function(buttonIndex) {
+            alert("index : " + buttonIndex);
+        });
+    };
+
+    self.getfile = function() {
         var elem = document.getElementById("file");
         elem.addEventListener("change", self.onimage , false);
         elem.click();

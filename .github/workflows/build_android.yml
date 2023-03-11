@@ -51,6 +51,7 @@ jobs:
           cordova plugin add cordova-plugin-statusbar
           cordova plugin add cordova-plugin-dialogs
           cordova plugin add cordova-plugin-file
+          cordova plugin add cordova-plugin-actionsheet
           cordova plugin add cordova-plugin-geolocation
           cordova plugin add cordova-plugin-email
           cordova plugin add cordova-plugin-x-socialsharing

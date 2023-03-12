@@ -144,10 +144,35 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
     };
     
     self.onSuccess = function(imageData) {
-        var image = new Image();
-        image.src = 'data:image/png;base64,' + imageData; // jpg ?
-        //$(".pic_area").css("background-image", "url('" + image.src + "')");
-        document.getElementById('essayageImg').src = "data:image/jpeg;base64," + imageData;
+        let uploadit = function(myFile) {
+            let filename = "";
+            let extension = (typeof myFile.name == "string") ? myFile.name : "";
+            if (extension == "") {
+                if (myFile.type.hasOwnProperty("type") && (typeof myFile.type.type == "string")) {
+                    extension = myFile.type.type.split("/")[1];
+                    filename = GetFileName("essayage", myFile.name, extension);
+                }
+            }
+            else filename = GetFileName("essayage", myFile.name);
+            if (filename == "") { alert("Impossible de traiter l'image !"); return; }
+            supe.storage.from("essayages").upload(filename, myFile)
+            .then((response) => {
+                if (!response.error) {
+                    let url = supe.storageUrl + "/object/public/essayages/" + response.data.path;
+                    //if (success) success(url);
+                    self.CreateEssayage(url);
+                }
+                else console.warn(response);
+            }).catch((err) => {
+                //elem.removeEventListener("change", self.onimage , false);
+                //self.errorhappened();
+            });
+        };
+        let base64Obj = "data:image/jpeg;base64," + imageData;
+        fallingSky(base64Obj, "image.png", "image/png", function(file) {
+            console.log(file);
+            uploadit(file);
+        });
         /*********************/
         supe.storage.from("essayages").upload("toto.png", imageData)
         .then((response) => {

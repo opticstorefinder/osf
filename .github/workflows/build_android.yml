@@ -33,8 +33,8 @@ jobs:
       - name: Install app dependencies
         run: npm install
 
-      #- name: Remove directory
-      #  run: rm -rf platforms
+      - name: Remove directory
+        run: rm -rf platforms
 
       #- name: Remove directory 1
       #  run: rm -rf /platforms

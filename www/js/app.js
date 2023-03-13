@@ -422,6 +422,13 @@ var loadEssentials = {/*
 };
 
 
+
+function DeleteEssayage() {
+	MyApp.fw7.app.emit("DeleteEssayage", myPhotoBrowserStandalone.activeIndex);
+}
+
+
+
 loadEssentials = {
 	categories: function() {
 		return new Promise((resolve, reject) => {

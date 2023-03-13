@@ -19,6 +19,18 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         self.sync();
         self.adjustboxes();
         self.getEssayages();
+        MyApp.fw7.app.on("DeleteEssayage", function(id) {
+            let img = $$(".essayage_list li > div")[id].style["background-image"];
+            img = img.replace('url("', '').replace('")', '');
+            for (let i = 0; i < $scope.essayages.length; i++) {
+                if ($scope.essayages[i].image == img) {
+                    self.id = $scope.essayages[i].id;
+                    $f7.dialog.confirm('Supprimer cet essayage ?', function () {
+                        $scope.DeleteEssayage();
+                    });
+                }
+            }
+        });
 	};
 
     self.getEssayages = function() {
@@ -31,12 +43,17 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
             self.sync();
             self.adjustboxes();
             BuildPhotoBrowser(self.getArrayImgs($scope.essayages));
+            myPhotoBrowserStandalone.on("opened", function() {
+                $$(".photo-browser-page .navbar-photo-browser .navbar-inner").prepend("<div class='left' style='position:absolute'><a class='link' onclick='DeleteEssayage()'><span><i class='f7-icons'>trash</i></span></a></div>");
+            });
         }).catch((error) => {
             console.warn(error);
         });
     };
 
     $scope.ZoomInEss = function(i) {
+        debugger;
+        alert(i + " = ");
         myPhotoBrowserStandalone.open(i);
     };
 
@@ -72,6 +89,7 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
                 $scope.zoomed = false;
                 self.sync();
                 self.getEssayages();
+                myPhotoBrowserStandalone.close();
             }
             else {
                 console.warn(response);

@@ -13,10 +13,9 @@
 
     <platform name="android">
       <preference name="StatusBarOverlaysWebView" value="false" />
+      <preference name="AndroidXEnabled" value="true" />
       <preference name="android-minSdkVersion" value="22" />
       <preference name="android-compileSdkVersion" value="32" />
-      <preference name="GradlePluginGoogleServicesEnabled" value="true" />
-      <preference name="GradlePluginGoogleServicesVersion" value="8.0.1" />
       <framework src="com.android.support:support-v4:+" />
       <icon density="ldpi" src="res/icon/android/mipmap-ldpi/ic_launcher.png" />
       <icon density="mdpi" src="res/icon/android/mipmap-mdpi/ic_launcher.png" />

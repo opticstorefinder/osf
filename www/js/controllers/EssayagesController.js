@@ -56,7 +56,8 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         BuildPhotoBrowser([$scope.essayages[i].image]);
         myPhotoBrowserStandalone.open();
         myPhotoBrowserStandalone.on("opened", function() {
-            $$(".photo-browser-page .navbar-photo-browser .navbar-inner").prepend("<div class='left'><a class='link' onclick='DeleteEssayage(" + i + ")'><span><i class='f7-icons'>trash</i></span></a></div>");
+            if ($$(".photo-browser-page .left").length <= 0)
+                $$(".photo-browser-page .navbar-photo-browser .navbar-inner").prepend("<div class='left'><a class='link' onclick='DeleteEssayage(" + i + ")'><span><i class='f7-icons'>trash</i></span></a></div>");
         });
         myPhotoBrowserStandalone.on("closed", function() {
             myPhotoBrowserStandalone.destroy();

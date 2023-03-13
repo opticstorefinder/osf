@@ -425,8 +425,17 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
     };
 
     $scope.forgotpw = function() {
-        supe.auth.resetPasswordForEmail($scope.forgot_login).then((response) => {
+        supe.auth.resetPasswordForEmail($scope.forgot_login, {
+            //redirectTo: 'https://apps.axelib.io/custom/opticstorefinder/reset-password',
+            redirectTo: 'https://api.axelib.io/versions/0.1/specific/osf/reset-password.php'
+        }).then((response) => {
             console.log(response);
+            let toastBottom = MyApp.fw7.app.toast.create({
+                text: 'Vous recevrez un e-mail pour ré-initialiser votre mot de passe !',
+                position: 'top',
+                closeTimeout: 2000,
+            });
+            toastBottom.open();
         }).catch((error) => {
             console.warn(error);
         });
@@ -1254,10 +1263,14 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
             });
         } 
     };
+
+    $scope.CloseHelper = function() {
+        $$(".VsgHelper").css("display", "none");
+    };
 	
     $scope.SetMeUser = function() {
         $scope.email = "bandzagilles@yahoo.fr";
-        $scope.password = "Azerty123";
+        $scope.password = "rototo12";
         self.sync();
         $("#login_form li.item-content").addClass("item-input-focused")
     };

@@ -43,7 +43,7 @@
                 <div style="margin:20px 0 0 0">
 
 					<ul class="essayage_list">
-						<li ng-repeat="essayage in essayages">
+						<li ng-repeat="essayage in essayages" ng-click="ZoomInEss($index)">
 							<div ng-style="{'background-image': 'url(' + essayage.image + ')'}" ng-click="zoomin(essayage)">
 								<div class="f7-icons">zoom_in</div>
 							</div>

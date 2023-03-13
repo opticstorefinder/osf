@@ -45,8 +45,18 @@ MyApp.angular.controller('OpticienController', ['$scope', '$rootScope', 'InitSer
             $scope.optic.distance = global.optic_distance;
             localStorage.setItem("opticien", JSON.stringify(e));
             self.sync();
+            BuildPhotoBrowser([$scope.optic.image]);
+            /*myPhotoBrowserStandalone = $f7.photoBrowser.create({
+                photos: [ 
+                    $scope.optic.image
+                ]
+            });*/
         });
 	};
+
+    $scope.OpenPhotoBrowser = function() {
+        myPhotoBrowserStandalone.open();
+    };
 
     $scope.changematiere = function(n) {
         $scope.id_matiere = n;

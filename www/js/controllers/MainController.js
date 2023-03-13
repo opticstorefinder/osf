@@ -274,6 +274,11 @@ MyApp.angular.controller('MainController', ['$scope', '$compile', '$rootScope', 
 		$scope.current = self.current;
 		self.sync();
 		self.GetSingleArticle();
+		//debugger;
+		$$('#photobrowser-article').on('click', function () {
+			myPhotoBrowserStandalone.open();
+			$$(".my-sheet-swipe-to-close").css("display", "none");
+		});
 	});
 	
     self.GetSingleArticle = function() {
@@ -292,6 +297,12 @@ MyApp.angular.controller('MainController', ['$scope', '$compile', '$rootScope', 
                 if (!response.error) {
                     global.article_id = null;
                     $scope.current = response.data[0];
+					/**/
+					BuildPhotoBrowser([$scope.current.image]);
+					myPhotoBrowserStandalone.on("close", function() {
+						$$(".my-sheet-swipe-to-close").css("display", "block");
+					});
+					/**/
 					/** check if saved */
 					let saved = localStorage.getItem("savedArticles");
 					if (saved) {

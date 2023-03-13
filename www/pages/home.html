@@ -261,6 +261,14 @@
             </div>
             <div id="tab-vsg" class="page-content tab" ng-class="{'tab-active': menu_item=='vsg'}">
                 
+                <div class="VsgHelper" style="display: none;">
+                    <div class="lineupdash"></div>
+                    <div class="lineupdash-text"><span>(1)</span> Modifier la position de la forme</div>
+                    <div class="linedowndash-text"><span>(2)</span> Valider lorsque vous avez terminé</div>
+                    <div class="linedowndash"></div>
+                    <div class="helperClose" ng-click="CloseHelper()">OK</div>
+                </div>
+
                 <div class="vsg_page_1" ng-show="pageVsg=='page1'">
                     <div class="vsg_graydv pic_area" style="background-image: url('assets/img/no2.png'); background-repeat: no-repeat; background-size: 100% auto;">
                         <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="0" data-direction="vertical" class="swiper swiper-init demo-swiper swiper-forms">
@@ -307,7 +315,7 @@
                     </div>
                     
                     <div class="fab fab-edit" ng-class="{'hidden': menu_item!='vsg'}" style="display:none;">
-                        <a href="#" ng-show="mode=='read'" ng-click="mode='edit'">
+                        <a href="#" ng-show="mode=='read'" ng-click="mode='edit'" onclick="$$('.VsgHelper').css('display', 'block');">
                             <i class="icon f7-icons">pencil</i>
                         </a>
                         <a href="#" ng-show="mode=='edit'" ng-click="GoNext()" class="success">

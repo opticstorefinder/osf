@@ -62,8 +62,7 @@ MyApp.angular.controller('ProfileController', ['$scope', '$rootScope', 'InitServ
             console.warn(error);
         });
     };
-
-
+    
     $scope.tobbi = function() {
         let test = 0;
         debugger;

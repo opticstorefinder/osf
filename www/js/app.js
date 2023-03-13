@@ -20,6 +20,9 @@ if (document.location.search.indexOf('theme=') >= 0) {
 	theme = document.location.search.split('theme=')[1].split('&')[0];
 }
 
+/*=== Default standalone ===*/
+var myPhotoBrowserStandalone = null;
+
 // Init angular
 var MyApp = {};
 MyApp.config = {};
@@ -1190,5 +1193,48 @@ function isObjectEqual(object1, object2) {
 function isObject(object) {
     return object != null && typeof object === "object";
 }
+
+function BuildPhotoBrowser(imgs) {
+	if (imgs.length > 0) {
+		myPhotoBrowserStandalone = $f7.photoBrowser.create({
+			photos: imgs,
+			popupCloseLinkText: "Fermer"
+		});
+		if (imgs.length == 1) {
+			myPhotoBrowserStandalone.on("opened", function() {
+				setTimeout(function() {
+					$$(".photo-browser-prev").hide();
+					$$(".photo-browser-next").hide();
+				}, 150)
+			});
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

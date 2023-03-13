@@ -30,9 +30,22 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
             $scope.essayages = response.data;
             self.sync();
             self.adjustboxes();
+            BuildPhotoBrowser(self.getArrayImgs($scope.essayages));
         }).catch((error) => {
             console.warn(error);
         });
+    };
+
+    $scope.ZoomInEss = function(i) {
+        myPhotoBrowserStandalone.open(i);
+    };
+
+    self.getArrayImgs = function(list) {
+        let arr = [];
+        for(let i = 0; i < list.length; i++) {
+            arr.push(list[i]["image"]);
+        }
+        return arr;
     };
 
     self.adjustboxes = function() {
@@ -44,11 +57,11 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         });
     };
 
-    $scope.zoomin = function(ess) {
+    $scope.zoomin = function(ess) {/*
         $scope.zoomed = true;
         self.id = ess.id;
         self.sync();
-        $$(".zoomed_in").css("background-image", "url(" + ess.image + ")");
+        $$(".zoomed_in").css("background-image", "url(" + ess.image + ")");*/
     };
 
     $scope.DeleteEssayage = function() {

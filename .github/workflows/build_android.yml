@@ -63,7 +63,8 @@ jobs:
           cordova plugin add cordova-plugin-inappbrowser
           cordova plugin add cordova-plugin-ionic-keyboard --save
           cordova plugin add https://github.com/apache/cordova-plugin-camera.git
-          cordova plugin add cordova-plugin-firebase --save
+          cordova plugin add cordova-plugin-firebasex
+          #cordova plugin add cordova-plugin-firebase --save
           #cordova plugin add github:havesource/cordova-plugin-push
 
       - name: Prepare Build

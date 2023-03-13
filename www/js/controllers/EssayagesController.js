@@ -34,27 +34,33 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
 	};
 
     self.getEssayages = function() {
+        $scope.loading = true;
         supe.from('users_essayage')
         .select('*')
         .eq('user_id', global.user.id)
         .then((response) => {
+            $scope.loading = false;
             console.log(response);
             $scope.essayages = response.data;
             self.sync();
             self.adjustboxes();
-            BuildPhotoBrowser(self.getArrayImgs($scope.essayages));
-            myPhotoBrowserStandalone.on("opened", function() {
-                $$(".photo-browser-page .navbar-photo-browser .navbar-inner").prepend("<div class='left' style='position:absolute'><a class='link' onclick='DeleteEssayage()'><span><i class='f7-icons'>trash</i></span></a></div>");
-            });
+            
         }).catch((error) => {
+            $scope.loading = false;
+            self.sync();
             console.warn(error);
         });
     };
 
     $scope.ZoomInEss = function(i) {
-        debugger;
-        alert(i + " = ");
-        myPhotoBrowserStandalone.open(i);
+        BuildPhotoBrowser([$scope.essayages[i].image]);
+        myPhotoBrowserStandalone.open();
+        myPhotoBrowserStandalone.on("opened", function() {
+            $$(".photo-browser-page .navbar-photo-browser .navbar-inner").prepend("<div class='left'><a class='link' onclick='DeleteEssayage(" + i + ")'><span><i class='f7-icons'>trash</i></span></a></div>");
+        });
+        myPhotoBrowserStandalone.on("closed", function() {
+            myPhotoBrowserStandalone.destroy();
+        });
     };
 
     self.getArrayImgs = function(list) {
@@ -190,7 +196,6 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
             .then((response) => {
                 if (!response.error) {
                     let url = supe.storageUrl + "/object/public/essayages/" + response.data.path;
-                    //if (success) success(url);
                     self.CreateEssayage(url);
                 }
                 else console.warn(response);
@@ -203,23 +208,6 @@ MyApp.angular.controller('EssayagesController', ['$scope', '$rootScope', 'InitSe
         fallingSky(base64Obj, "image.png", "image/png", function(file) {
             console.log(file);
             uploadit(file);
-        });
-        /*********************/
-        supe.storage.from("essayages").upload("toto.png", imageData)
-        .then((response) => {
-            if (!response.error) {
-                let url = supe.storageUrl + "/object/public/essayages/" + response.data.path;
-                alert(url);
-                //if (success) success(url);
-            }
-            else {
-                alert(response);
-                console.warn(response);
-            }
-        }).catch((err) => {
-            alert(err);
-            //elem.removeEventListener("change", self.onimage , false);
-            //self.errorhappened();
         });
     };
     

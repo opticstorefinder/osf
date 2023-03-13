@@ -40,10 +40,12 @@
         <div class="above_list_optk" style="box-shadow:0px -6px 7px -3px rgb(0 0 0 / 8%)">
 			
             <form class="list" style="margin-top: 0px; margin-bottom: 15px; text-transform: none;">
-                <div style="margin:20px 0 0 0">
+                <div style="margin:20px 0 0 0; text-align: center;">
+
+					<div class="preloader" ng-show="loading"></div>
 
 					<ul class="essayage_list">
-						<li ng-repeat="essayage in essayages" ng-click="ZoomInEss($index)">
+						<li ng-repeat="essayage in essayages" ng-click="ZoomInEss($index, essayage.id)" id="ess_$index">
 							<div ng-style="{'background-image': 'url(' + essayage.image + ')'}" ng-click="zoomin(essayage)">
 								<div class="f7-icons">zoom_in</div>
 							</div>

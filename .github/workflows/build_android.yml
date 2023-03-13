@@ -68,7 +68,7 @@ jobs:
           #cordova plugin add github:havesource/cordova-plugin-push
 
       - name: Prepare Build
-        run: cordova prepare
+        run: cordova prepare android
 
       - name: Build Android Dev APK
         run: cordova build android --debug

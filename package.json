@@ -1,5 +1,5 @@
 {
-  "name": "com.opticstorefinder.osf5",
+  "name": "com.opticstorefinder.osf",
   "displayName": "Optic Store Finder",
   "version": "1.0.0",
   "description": "Optic Store Finder mobile application",
@@ -12,19 +12,28 @@
   ],
   "author": "Gilles Bandza @OpticStoreFinder",
   "license": "Apache-2.0",
-  "dependencies": {
-    "cordova": "^11.1.0"
-  },
   "devDependencies": {
     "cordova-android": "^10.1.2",
+    "cordova-ios": "^6.2.0",
+    "cordova-plugin-camera": "github:apache/cordova-plugin-camera",
+    "cordova-plugin-device": "^2.1.0",
+    "cordova-plugin-keyboard": "^1.2.0",
+    "cordova-plugin-statusbar": "^3.0.0",
     "cordova-plugin-splashscreen": "^6.0.2"
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-keyboard": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      }
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

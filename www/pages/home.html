@@ -203,6 +203,9 @@
                 <div class="block">
                     <div ng-show="rdv_tab=='coming'" ng-click="rdv_tab='coming'" style="margin: 0 10px;">
                         <!--<p>RENDEZ-VOUS à venir</p>-->
+                        <div style="text-align: center;">
+                            <div class="preloader" ng-show="loading_rdv"></div>
+                        </div>
                         <div class="nordv" ng-show="NbAvenir(rdvs)<=0">Aucun rendez-vous à venir</div>
                         <div class="rdv" ng-repeat="rdv in rdvs | orderBy: 'rdvdate' track by rdv.id" ng-hide="checkFutur(rdv.rdvdate)">
                             <div class="rdv_date">

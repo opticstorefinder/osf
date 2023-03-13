@@ -42,6 +42,7 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
     $scope.trends = [];
     $scope.essayages = [];
     $scope.closerBtnUp = true;
+    $scope.loading_rdv = false;
 
     $scope.offsetMove = 7;
 
@@ -842,6 +843,7 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
 
     self.getRdv = function() {
         if (!global.user || !global.user.id) return;
+        $scope.loading_rdv = true;
         supe.from('Rendezvous')
         .select('id, date, active, time, utilisateur, note, opticien(id, name, image, email), motif, incident, status, informations').order('date', { ascending: false })
         .eq('utilisateur', global.user.id)
@@ -853,9 +855,12 @@ MyApp.angular.controller('HomeController', ['$scope', '$rootScope', 'InitService
                 let date = new Date($scope.rdvs[i].date + " " + $scope.rdvs[i].time);
                 $scope.rdvs[i].rdvdate = date; //new Date($scope.rdvs[i].date);
             }
+            $scope.loading_rdv = false;
             self.sync();
         }).catch((error) => {
             console.warn(error);
+            $scope.loading_rdv = false;
+            self.sync();
         });
     };
 

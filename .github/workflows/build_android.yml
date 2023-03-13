@@ -24,6 +24,10 @@ jobs:
         with:
           node-version: 18.x
 
+      - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 8.0.1
+
       - name: Install Cordova
         run: npm install -g cordova
 
